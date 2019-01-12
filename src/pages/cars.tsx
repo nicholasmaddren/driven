@@ -10,7 +10,7 @@ import {
 } from 'react-instantsearch-dom';
 import { Link } from 'gatsby';
 import qs from 'qs';
-import { createHistory } from '@reach/router';
+import { navigate } from '@reach/router';
 
 import Layout from '../components/Layout';
 import SEO from '../components/Seo';
@@ -118,7 +118,8 @@ const StyledHitsHeaderRefinement = styled.div`
   }
 `;
 
-const StyledRefinementList = styled.div`
+const StyledRefinementList = styled.div<IStyledRefinementList>`
+  display: ${props => (props.isInactive ? 'none' : 'block')};
   padding: 20px 0;
   border-bottom: 1px solid ${props => props.theme.vars.color.grey1};
   &:last-child {
@@ -167,41 +168,44 @@ const StyledRefinementList = styled.div`
   }
 `;
 
+interface IStyledRefinementList {
+  isInactive?: boolean;
+}
+
+interface IProps {
+  location: string;
+}
+
 interface IState {
-  searchPlaceholder: string;
+  searchState: string;
   make: boolean;
 }
 
-class Cars extends React.Component {
+class Cars extends React.Component<IProps> {
+  private urlToSearchState = (location: any) =>
+    qs.parse(location.search.slice(1));
+
   public state: IState = {
-    searchPlaceholder: 'Search by make, model or keyword',
+    searchState: this.urlToSearchState(this.props.location),
     make: false,
   };
 
-  private updateAfter = 700;
+  private createURL = (state: { page: number; refinementList: {} }) =>
+    `?${qs.stringify(state)}`;
 
-  private createURL = state => `?${qs.stringify(state)}`;
-
-  private searchStateToUrl = (props, searchState) =>
+  private searchStateToUrl = (
+    props: any,
+    searchState: { page: number; refinementList: {} }
+  ) =>
     searchState
       ? `${props.location.pathname}${this.createURL(searchState)}`
       : '';
-
-  private urlToSearchState = location => qs.parse(location.search.slice(1));
 
   componentWillReceiveProps(props) {
     if (props.location !== this.props.location) {
       this.setState({ searchState: this.urlToSearchState(props.location) });
     }
   }
-
-  onSearchStateChange = searchState => {
-    const debouncedSetState = setTimeout(() => {
-      createHistory(this.searchStateToUrl(this.props, searchState));
-    }, this.updateAfter);
-    clearTimeout(debouncedSetState);
-    this.setState({ searchState });
-  };
 
   render() {
     return (
@@ -211,7 +215,9 @@ class Cars extends React.Component {
           appId="UQS7NGYH01"
           apiKey="417b0c1b13d3941a26d83069eec84360"
           indexName="dev_searchListings"
-          onSearchStateChange={event => this.searchChangeHandler(event)}
+          searchState={this.state.searchState}
+          onSearchStateChange={event => this.onSearchStateChangedHandler(event)}
+          createURL={event => this.createURL(event)}
         >
           <StyledContainer>
             <StyledFacetedNav>
@@ -219,18 +225,16 @@ class Cars extends React.Component {
                 <label>Make</label>
                 <RefinementList attribute="make" />
               </StyledRefinementList>
-              {this.state.make && (
-                <StyledRefinementList>
-                  <label>Model</label>
-                  <RefinementList attribute="model" />
-                </StyledRefinementList>
-              )}
+              <StyledRefinementList isInactive={!this.state.make}>
+                <label>Model</label>
+                <RefinementList attribute="model" />
+              </StyledRefinementList>
             </StyledFacetedNav>
             <StyledHits>
               <StyledHitsHeader>
                 <SearchBox
                   translations={{
-                    placeholder: this.state.searchPlaceholder,
+                    placeholder: 'Search by make, model or keyword',
                   }}
                 />
                 <StyledHitsHeaderRefinement>
@@ -247,18 +251,18 @@ class Cars extends React.Component {
     );
   }
 
-  private searchChangeHandler(e) {
-    if (e.refinementList.make.length === 0) {
+  private onSearchStateChangedHandler(searchState: {
+    page: number;
+    refinementList: { make: [] };
+  }) {
+    if (searchState.refinementList.make.length === 0) {
       this.setState({ make: false });
     } else {
       this.setState({ make: true });
     }
-    if (e.refinementList.model !== '') {
-      this.setState({ searchPlaceholder: 'Search by make or keyword' });
-    }
-    if (e.refinementList.model !== '' && e.refinementList.make !== '') {
-      this.setState({ searchPlaceholder: 'Search by keyword' });
-    }
+    navigate(this.searchStateToUrl(this.props, searchState));
+
+    this.setState({ searchState });
   }
 }
 
