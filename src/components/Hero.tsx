@@ -20,6 +20,7 @@ const StyledContent = styled.div`
   }
   p {
     font-size: 20px;
+    margin: 0;
   }
 `;
 
