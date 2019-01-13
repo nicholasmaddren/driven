@@ -7,7 +7,7 @@ const StyledFacetedNav = styled.div`
   display: flex;
   margin-bottom: 20px;
   input {
-    height: 40px;
+    height: 50px;
     padding: 0 10px;
     min-width: 360px;
     border: 0;
@@ -16,7 +16,7 @@ const StyledFacetedNav = styled.div`
     background: ${props => props.theme.vars.color.blue};
     border: 0;
     color: #fff;
-    height: 40px;
+    height: 50px;
     padding: 0 20px;
     cursor: pointer;
   }
