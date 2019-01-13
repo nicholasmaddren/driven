@@ -12,7 +12,7 @@ import VehicleItem from './VehicleItem';
 
 const StyledCarousel = styled.div`
   background: ${props => props.theme.vars.color.grey1};
-  padding: 40px 60px;
+  padding: 40px 80px;
 `;
 
 const StyledControl = styled.button`
@@ -47,6 +47,7 @@ interface IProps {
 
 const VehicleCarousel: React.SFC<IProps> = props => (
   <StyledCarousel>
+    <h2>Latest Cars</h2>
     <Carousel
       slidesToShow={4}
       slidesToScroll={4}
