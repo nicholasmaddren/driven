@@ -26,7 +26,7 @@ interface IState {
   searchQuery: string;
 }
 
-class VehicleSearch extends React.Component<IState> {
+class VehicleSearch extends React.Component {
   public state: IState = {
     searchQuery: '',
   };
