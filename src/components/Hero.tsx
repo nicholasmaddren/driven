@@ -16,7 +16,7 @@ const StyledContent = styled.div`
   line-height: 1.2;
   text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   h1 {
-    font-size: 70px;
+    font-size: 55px;
   }
   p {
     font-size: 20px;
