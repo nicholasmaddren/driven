@@ -13,7 +13,7 @@ const StyledFacetedNav = styled.div`
     border: 0;
   }
   button {
-    background: blue;
+    background: ${props => props.theme.vars.color.blue};
     border: 0;
     color: #fff;
     height: 40px;
