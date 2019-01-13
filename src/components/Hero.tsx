@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React from 'react';
+import * as React from 'react';
 
 const StyledHero = styled.div`
   padding: 40px 80px;

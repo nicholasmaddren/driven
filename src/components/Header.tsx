@@ -1,6 +1,6 @@
 import { Link } from 'gatsby';
 import styled from 'styled-components';
-import React from 'react';
+import * as React from 'react';
 
 const StyledHeader = styled.div`
   padding: 20px;
