@@ -214,7 +214,7 @@ exports.sourceNodes = ({ graphql, actions }) => {
     ];
 
     // map into these results and create nodes
-    await res.data.map(listing => {
+    res.map(listing => {
       const {
         vehicleId,
         make,
@@ -313,14 +313,14 @@ exports.sourceNodes = ({ graphql, actions }) => {
     // Create your node object
     const dealershipInfoNode = {
       // Required fields
-      id: res.data.orgId.toString(),
+      id: res.orgId.toString(),
       parent: `__SOURCE__`,
       internal: {
         type: `DealershipInfo`,
       },
       children: [],
-      country: res.data.country,
-      currency: res.data.currency,
+      country: res.country,
+      currency: res.currency,
     };
 
     // Get content digest of node. (Required field)
