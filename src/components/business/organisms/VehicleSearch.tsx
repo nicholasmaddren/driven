@@ -37,6 +37,7 @@ class VehicleSearch extends React.Component {
           <input
             type="text"
             onChange={e => this.setState({ searchQuery: e.target.value })}
+            placeholder="Search by make, model or keyword"
           />
           <button type="submit">Search</button>
         </form>
