@@ -1,51 +1,55 @@
 import styled from 'styled-components';
-import React from 'react';
+import * as React from 'react';
+import { navigate } from '@reach/router';
 
 const StyledFacetedNav = styled.div`
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.4);
   border-radius: 5px;
   display: flex;
   margin-bottom: 20px;
-  select {
-    width: 100%;
+  input {
+    height: 40px;
+    padding: 0 10px;
+    min-width: 360px;
+    border: 0;
   }
   button {
     background: blue;
     border: 0;
     color: #fff;
+    height: 40px;
+    padding: 0 20px;
+    cursor: pointer;
   }
 `;
 
-const VehicleSearch: React.SFC = () => (
-  <StyledFacetedNav>
-    <select>
-      <option value="" selected>
-        All makes
-      </option>
-      <option>Audi</option>
-      <option>BMW</option>
-      <option>Volkswagen</option>
-    </select>
-    <select>
-      <option value="" selected>
-        All models
-      </option>
-      <option>Audi</option>
-      <option>BMW</option>
-      <option>Volkswagen</option>
-    </select>
-    <select>
-      <option value="" selected>
-        All prices
-      </option>
-      <option>£1000 ></option>
-      <option>£2000 ></option>
-      <option>£4000 ></option>
-      <option>£8000 ></option>
-      <option>£16000 ></option>
-    </select>
-    <button>Search</button>
-  </StyledFacetedNav>
-);
+interface IState {
+  searchQuery: string;
+}
+
+class VehicleSearch extends React.Component<IState> {
+  public state: IState = {
+    searchQuery: '',
+  };
+  render() {
+    return (
+      <StyledFacetedNav>
+        <form onSubmit={e => this.onSubmitHandler(e)}>
+          <input
+            type="text"
+            onChange={e => this.setState({ searchQuery: e.target.value })}
+          />
+          <button type="submit">Search</button>
+        </form>
+      </StyledFacetedNav>
+    );
+  }
+  onSubmitHandler(e) {
+    if (this.state.searchQuery === '') {
+      navigate(`/cars/`);
+    } else {
+      navigate(`/cars/?page=1&query=${this.state.searchQuery}`);
+    }
+    e.preventDefault();
+  }
+}
 export default VehicleSearch;
