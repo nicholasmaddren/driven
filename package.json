@@ -28,7 +28,7 @@
     "gatsby-source-filesystem": "^2.0.8",
     "gatsby-transformer-sharp": "^2.1.8",
     "lodash": "^4.17.11",
-    "nuka-carousel": "^4.4.4",
+    "nuka-carousel": "^4.4.5",
     "numeral": "^2.0.6",
     "prop-types": "^15.6.2",
     "qs": "^6.6.0",
