@@ -54,6 +54,7 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "devDependencies": {
+    "@types/react-helmet": "^5.0.8",
     "prettier": "^1.15.2"
   },
   "repository": {
