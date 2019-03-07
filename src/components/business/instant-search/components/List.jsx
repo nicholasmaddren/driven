@@ -259,7 +259,7 @@ const listingsQuery = graphql`
     allListings {
       edges {
         node {
-          id
+          vin
           make
           model
         }

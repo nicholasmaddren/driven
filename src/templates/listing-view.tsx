@@ -23,7 +23,7 @@ export default ({ data }) => (
   <Layout>
     <StyledListingView>
       <StyledImageSlider>
-        <img src={data.listings.images[0]} />
+        <img src={data.listings.images} />
       </StyledImageSlider>
       <StyledInfo>
         <h3>{data.listings.make}</h3>

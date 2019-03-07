@@ -11,6 +11,7 @@ import {
 import { Link } from 'gatsby';
 import qs from 'qs';
 import { navigate } from '@reach/router';
+import _ from 'lodash';
 
 import Layout from '../components/Layout';
 import SEO from '../components/Seo';
@@ -251,14 +252,11 @@ class Cars extends React.Component<IProps> {
     );
   }
 
-  private onSearchStateChangedHandler(searchState: {
-    page: number;
-    refinementList: { make: [] };
-  }) {
-    if (searchState.refinementList.make.length === 0) {
-      this.setState({ make: false });
-    } else {
+  private onSearchStateChangedHandler(searchState: any) {
+    if (_.get(searchState, 'refinementList.make')) {
       this.setState({ make: true });
+    } else {
+      this.setState({ make: false });
     }
     navigate(this.searchStateToUrl(this.props, searchState));
 

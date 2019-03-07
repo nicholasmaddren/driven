@@ -13,17 +13,17 @@ exports.sourceNodes = ({ graphql, actions }) => {
 
   (async function() {
     // fetch raw data from the listings api
-    const fetchSiteData = () => axios.get(`http://localhost:3000/listings`);
+    const fetchSiteData = () => axios.get(``);
     // await for results
     const res = await fetchSiteData();
 
     // map into these results and create nodes
-    await res.data.map(listing => {
+    await res.data.map(car => {
       const {
-        vehicleId,
+        vin,
         make,
         model,
-        trim,
+        variant,
         description,
         color,
         price,
@@ -32,18 +32,22 @@ exports.sourceNodes = ({ graphql, actions }) => {
         doors,
         bodyType,
         fuelType,
+        engineSize,
         transmission,
-        engine,
-        performance,
+        bhp,
+        torque,
+        zeroTo60,
         condition,
-        features,
+        interiorFeatures,
+        exteriorFeatures,
         images,
         slug,
-      } = listing;
+      } = car;
+
       // Create your node object
       const listingNode = {
         // Required fields
-        id: 'listing-' + listing.id.toString(),
+        id: 'listing-' + vin.toString(),
         parent: `__SOURCE__`,
         internal: {
           type: `Listings`, // name of the graphQL query --> allListings {}
@@ -52,10 +56,10 @@ exports.sourceNodes = ({ graphql, actions }) => {
         },
         children: [],
 
-        vehicleId,
+        vin,
         make,
         model,
-        trim,
+        variant,
         description,
         color,
         price,
@@ -64,18 +68,14 @@ exports.sourceNodes = ({ graphql, actions }) => {
         doors,
         bodyType,
         fuelType,
-        engine: { size: engine.size },
+        engineSize,
         transmission,
-        performance: {
-          bhp: performance.bhp,
-          torque: performance.torque,
-          zeroTo60: performance.zeroTo60,
-        },
+        bhp,
+        torque,
+        zeroTo60,
         condition,
-        features: {
-          interior: features.interior,
-          exterior: features.exterior,
-        },
+        interiorFeatures,
+        exteriorFeatures,
         images,
         slug,
       };
@@ -87,6 +87,8 @@ exports.sourceNodes = ({ graphql, actions }) => {
         .digest(`hex`);
       // add it to userNode
       listingNode.internal.contentDigest = contentDigest;
+
+      console.log(listingNode);
 
       // Create node with the gatsby createNode() API
       createNode(listingNode);
@@ -105,22 +107,22 @@ exports.sourceNodes = ({ graphql, actions }) => {
 
   (async function() {
     // fetch raw data from the dealership-info api
-    const fetchSiteData = () =>
-      axios.get(`http://localhost:3000/dealership-info`);
-    // await for results
-    const res = await fetchSiteData();
+    // const fetchSiteData = () => get(`http://localhost:3000/dealership-info`);
+    // // await for results
+    // const res = await fetchSiteData();
 
     // Create your node object
     const dealershipInfoNode = {
       // Required fields
-      id: res.data.orgId.toString(),
+      // id: res.data.orgId.toString(),
+      id: 'hg67js',
       parent: `__SOURCE__`,
       internal: {
         type: `DealershipInfo`,
       },
       children: [],
-      country: res.data.country,
-      currency: res.data.currency,
+      country: 'US',
+      currency: '£',
     };
 
     // Get content digest of node. (Required field)
