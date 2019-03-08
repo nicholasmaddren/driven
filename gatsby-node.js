@@ -19,7 +19,6 @@ exports.sourceNodes = async ({ actions }) => {
     )
     .then(res => {
       if (!res.data.length) {
-        console.log('Test data used');
         res.data.push({
           vin: '12345',
           make: 'BMW',
@@ -43,7 +42,7 @@ exports.sourceNodes = async ({ actions }) => {
           exteriorFeatures: 'Alloy Wheels - Xeonon Headlights',
           images:
             'https://inchcapecdn.azureedge.net/cdn-images/stock/a/au68jsy-1-xl.jpg',
-          slug: 'bmw-3-series-12345',
+          slug: 'cars/bmw-3-series-12345',
         });
       }
       res.data.map(car => {
