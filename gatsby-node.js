@@ -18,6 +18,33 @@ exports.sourceNodes = async ({ actions }) => {
       }`
     )
     .then(res => {
+      if (!res.data.length) {
+        res.data.push({
+          vin: '12345',
+          make: 'BMW',
+          model: '3 Series',
+          variant: '320d M Sport',
+          description: 'Lovely example',
+          color: 'red',
+          price: 14895,
+          year: 2016,
+          mileage: 22308,
+          doors: 5,
+          bodyType: 'Saloon',
+          fuelType: 'Diesel',
+          engineSize: 1995,
+          transmission: 'Automatic',
+          bhp: 201,
+          torque: 230,
+          zeroTo60: 7.6,
+          condition: 'Used',
+          interiorFeatures: 'Blutooth - Heated Seats - Air Conditioning',
+          exteriorFeatures: 'Alloy Wheels - Xeonon Headlights',
+          images:
+            'https://inchcapecdn.azureedge.net/cdn-images/stock/a/au68jsy-1-xl.jpg',
+          slug: 'bmw-3-series-12345',
+        });
+      }
       res.data.map(car => {
         const {
           vin,
