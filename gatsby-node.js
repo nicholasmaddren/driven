@@ -19,6 +19,7 @@ exports.sourceNodes = async ({ actions }) => {
     )
     .then(res => {
       if (!res.data.length) {
+        console.log('Test data used');
         res.data.push({
           vin: '12345',
           make: 'BMW',
