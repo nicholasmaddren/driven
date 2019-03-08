@@ -23,13 +23,13 @@ export default ({ data }) => (
   <Layout>
     <StyledListingView>
       <StyledImageSlider>
-        <img src={data.listings.images} />
+        <img src={data.car.images} />
       </StyledImageSlider>
       <StyledInfo>
-        <h3>{data.listings.make}</h3>
-        <p>{data.listings.model}</p>
-        <p>{data.listings.price}</p>
-        <p>{data.listings.mileage}</p>
+        <h3>{data.car.make}</h3>
+        <p>{data.car.model}</p>
+        <p>{data.car.price}</p>
+        <p>{data.car.mileage}</p>
       </StyledInfo>
     </StyledListingView>
   </Layout>
@@ -37,7 +37,7 @@ export default ({ data }) => (
 
 export const query = graphql`
   query($slug: String!) {
-    listings(slug: { eq: $slug }) {
+    cars(slug: { eq: $slug }) {
       make
       model
       price

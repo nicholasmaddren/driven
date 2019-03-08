@@ -143,18 +143,18 @@ class List extends Component {
     );
   }
 
-  getModifiedItems(items, allListings) {
+  getModifiedItems(items, allCars) {
     const modifiedItems = [];
     items.map(item => {
-      return allListings.map(listing => {
-        if (listing.node.model === item.label) {
+      return allCars.map(car => {
+        if (car.node.model === item.label) {
           const { count, isRefined, label, value } = item;
           const modifiedItem = {
             count,
             isRefined,
             label,
             value,
-            make: listing.node.make,
+            make: car.node.make,
           };
           return modifiedItems.push(modifiedItem);
         }
@@ -204,11 +204,11 @@ class List extends Component {
     // option.
     return attribute === 'model' ? (
       <StaticQuery
-        query={listingsQuery}
+        query={carsQuery}
         render={data => {
           const modifiedItems = this.getModifiedItems(
             items,
-            data.allListings.edges
+            data.allCars.edges
           );
           const itemMakes = this.getItemMakes(modifiedItems);
           return (
@@ -254,9 +254,9 @@ class List extends Component {
   }
 }
 
-const listingsQuery = graphql`
+const carsQuery = graphql`
   query {
-    allListings {
+    allCars {
       edges {
         node {
           vin

@@ -21,7 +21,7 @@ const IndexPage = () => (
           >
             <VehicleSearch />
           </Hero>
-          <VehicleCarousel vehicleItems={data.allListings.edges} />
+          <VehicleCarousel vehicleItems={data.allCars.edges} />
           <BulletPoints
             items={[
               {
@@ -64,7 +64,7 @@ const IndexPage = () => (
 
 const indexContentQuery = graphql`
   query {
-    allListings {
+    allCars {
       edges {
         node {
           id
