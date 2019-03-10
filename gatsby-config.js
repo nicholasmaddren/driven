@@ -32,5 +32,11 @@ module.exports = {
     // 'gatsby-plugin-offline',
     `gatsby-plugin-typescript`,
     `gatsby-plugin-styled-components`,
+    {
+      resolve: `gatsby-plugin-env-variables`,
+      options: {
+        whitelist: ['SITE_NAME'],
+      },
+    },
   ],
 };
