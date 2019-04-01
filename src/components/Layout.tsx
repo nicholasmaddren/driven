@@ -47,7 +47,10 @@ const Layout: React.SFC = props => (
       render={data => (
         <>
           <GlobalStyle />
-          <Header siteTitle={data.site.siteMetadata.title} />
+          <Header
+            siteTitle={data.site.siteMetadata.title}
+            logoImage="https://drivengroup.co.uk/wp-content/themes/driven/dist/images/logo-dark_1125fb4a.png"
+          />
           <div>{props.children}</div>
         </>
       )}
