@@ -7,6 +7,7 @@ import Hero from '../components/Hero';
 import VehicleSearch from '../components/business/organisms/VehicleSearch';
 import VehicleCarousel from '../components/business/organisms/VehicleCarousel';
 import BulletPoints from '../components/BulletPoints';
+import VehicleByType from '../components/business/organisms/VehicleByType';
 
 const IndexPage = () => (
   <StaticQuery
@@ -18,9 +19,15 @@ const IndexPage = () => (
           <Hero
             heading="Experience clear and simple car buying and selling."
             paragraph="Some other content"
+            bgImage="https://www.carmax.com/~/media/images/carmax/com/Homepage/hero/hp-hero-shopper-on-car-lot-final.jpg?ts=20170228T175801Z"
+            bgPosition="center bottom"
+            bgGradientColor1="rgba(0, 0, 0, 0.5)"
+            bgGradientColor2="rgba(0, 0, 0, 0)"
+            bgGradientPosition="45deg"
           >
             <VehicleSearch />
           </Hero>
+          <VehicleByType />
           <VehicleCarousel vehicleItems={data.allCars.edges} />
           <BulletPoints
             items={[
