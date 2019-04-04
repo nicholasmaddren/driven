@@ -1,4 +1,9 @@
 const vars = {
+  border: {
+    radius: {
+      default: '5px',
+    },
+  },
   color: {
     grey1: '#f1f1f1',
     grey2: '#d0d0d0',
