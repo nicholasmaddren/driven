@@ -4,6 +4,7 @@ import * as React from 'react';
 
 const StyledHeader = styled.div`
   position: sticky;
+  z-index: 1;
   top: 0;
   padding: 20px;
   background: #fff;
@@ -12,6 +13,7 @@ const StyledHeader = styled.div`
   align-items: center;
   border-bottom: 1px solid ${props => props.theme.vars.color.grey2};
   a {
+    font-size: 14px;
     text-decoration: none;
     color: ${props => props.theme.vars.color.grey4};
   }
@@ -61,7 +63,7 @@ const Header: React.SFC<IHeaderProps> = props => (
       <Link to="/cars">Cars for sale</Link>
       <Link to="/">Sell your car</Link>
       <Link to="/">About us</Link>
-      <Link to="/">Contact</Link>
+      <Link to="/contact">Contact Us</Link>
     </StyledMenu>
   </StyledHeader>
 );
