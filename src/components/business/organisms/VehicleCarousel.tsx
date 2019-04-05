@@ -47,7 +47,7 @@ interface IProps {
 
 const VehicleCarousel: React.SFC<IProps> = props => (
   <StyledCarousel>
-    <h2>Latest Cars</h2>
+    <h3>Latest Cars</h3>
     <Carousel
       slidesToShow={4}
       slidesToScroll={4}

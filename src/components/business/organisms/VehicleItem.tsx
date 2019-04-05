@@ -62,9 +62,9 @@ const VehicleCarousel: React.SFC<IProps> = props => (
       <img src={props.featuredImage} />
     </StyledImageContainer>
     <StyledContentContainer>
-      <h3>
+      <h4>
         {props.make} {props.model}
-      </h3>
+      </h4>
       <StyledSpecContainer>
         <div>
           <Badge mr={2}>{props.year}</Badge>

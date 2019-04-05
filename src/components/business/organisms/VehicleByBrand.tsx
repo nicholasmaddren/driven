@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const StyledVehicleByBrand = styled.div`
   padding: 40px 80px;
+  background-color: #fff;
 `;
 
 const StyledBrandContainer = styled.div`
@@ -37,7 +38,7 @@ interface IVehicleByBrandProps {
 
 const VehicleByBrand: FC<IVehicleByBrandProps> = props => (
   <StyledVehicleByBrand>
-    <h2>Shop by brand</h2>
+    <h3>Shop by brand</h3>
     <StyledBrandContainer>
       {props.brands.map(brand => (
         <StyledBrandItem>
