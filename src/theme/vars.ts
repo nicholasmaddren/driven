@@ -9,7 +9,8 @@ const vars = {
     grey2: '#d0d0d0',
     grey3: '#808080',
     grey4: '#333',
-    blue: '#0b8aea',
+    primary: '#E14E4E',
+    secondary: '#2A79E8',
   },
   font: {
     family: "'Source Sans Pro'",

@@ -17,20 +17,55 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,h2,h3,h4,h5,h6 {
     margin-top: 0;
-    margin-bottom: .5rem;
+  }
+
+  h1 {
+    font-size: 2.6rem;
+    margin-bottom: 15px;
     font-weight: 700;
-    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  h4 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  h5 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    font-weight: 600;
   }
 
   p {
     margin-top: 0;
-    margin-bottom: .5rem;
+    margin-bottom: 10px;
   }
 
   a {
     text-decoration: none;
+  }
+
+  .margin__none {
+    margin: 0;
+  }
+
+  .font-weight__light {
+    font-weight: 300;
   }
 `;
 
