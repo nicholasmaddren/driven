@@ -2,6 +2,12 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 import { navigate } from 'gatsby';
 
+import BMW from '../../../images/brands/bmw.png';
+import Chevrolet from '../../../images/brands/chevrolet.png';
+import Toyota from '../../../images/brands/toyota.png';
+import Ford from '../../../images/brands/ford.png';
+import MercedesBenz from '../../../images/brands/mercedes-benz.png';
+
 const StyledVehicleByBrand = styled.div`
   padding: 40px 80px;
   background-color: #fff;
@@ -46,17 +52,42 @@ const VehicleByBrand: FC<IVehicleByBrandProps> = props => {
     <StyledVehicleByBrand>
       <h3>Shop by Brand</h3>
       <StyledBrandContainer>
-        {uniqueBrandsArray.map(brand => (
-          <StyledBrandItem
-            onClick={() => navigate(`/cars/?page=1&query=${brand}`)}
-            key={`vehicle-by-brand-${brand}`}
-          >
-            {brand}
-          </StyledBrandItem>
-        ))}
+        {uniqueBrandsArray.map(brand => {
+          const logoImage = getLogoImage(brand);
+          if (logoImage) {
+            return (
+              <StyledBrandItem
+                onClick={() => navigate(`/cars/?page=1&query=${brand}`)}
+                key={`vehicle-by-brand-${brand}`}
+              >
+                <img alt={brand} src={logoImage} />
+              </StyledBrandItem>
+            );
+          }
+          return brand;
+        })}
       </StyledBrandContainer>
     </StyledVehicleByBrand>
   );
+};
+
+const getLogoImage = name => {
+  // This is needed because of spelling variations, example: "Mercedes-Benz" or "Mercedes Benz"
+  const rawName = name.toLowerCase().replace(/-|\s/g, '');
+  switch (rawName) {
+    case 'bmw':
+      return BMW;
+    case 'chevrolet':
+      return Chevrolet;
+    case 'ford':
+      return Ford;
+    case 'mercedesbenz':
+      return MercedesBenz;
+    case 'toyota':
+      return Toyota;
+    default:
+      return null;
+  }
 };
 
 export default VehicleByBrand;
