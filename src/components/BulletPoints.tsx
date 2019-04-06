@@ -33,7 +33,7 @@ const BulletPoints: React.SFC<IProps> = props => (
   <StyledBulletPoints>
     {props.items.map(item => {
       return (
-        <StyledtItem key={item.id}>
+        <StyledtItem key={'bullet-point-' + item.id}>
           <img src={item.image.src} alt={item.image.alt} />
           <div className="content">
             <h3>{item.heading}</h3>
