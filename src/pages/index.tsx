@@ -27,65 +27,9 @@ const IndexPage = () => (
           >
             <VehicleSearch />
           </Hero>
-          <VehicleByBrand
-            brands={[
-              {
-                name: 'Chevrolet',
-                image:
-                  'http://www.carlogos.org/logo/Chevrolet-logo-2013-2560x1440.png',
-              },
-              {
-                name: 'BMW',
-                image:
-                  'http://www.carlogos.org/logo/BMW-logo-2000-2048x2048.png',
-              },
-              {
-                name: 'Ford',
-                image:
-                  'http://www.carlogos.org/logo/Ford-logo-2003-1366x768.png',
-              },
-              {
-                name: 'Toyota',
-                image:
-                  'http://www.carlogos.org/logo/Toyota-logo-1989-2560x1440.png',
-              },
-            ]}
-          />
+          <VehicleByBrand cars={data.allCars.edges} />
           <VehicleCarousel vehicleItems={data.allCars.edges} />
-          <BulletPoints
-            items={[
-              {
-                id: '1',
-                heading: 'superb service',
-                description: 'this service is awesome',
-                image: {
-                  src:
-                    'https://assets.vroomcdn.com/static-rebrand/img/homepage/new/value1_2x.png',
-                  alt: 'value 1',
-                },
-              },
-              {
-                id: '2',
-                heading: 'superb service',
-                description: 'this service is awesome',
-                image: {
-                  src:
-                    'https://assets.vroomcdn.com/static-rebrand/img/homepage/new/value-2_3.png',
-                  alt: 'value 2',
-                },
-              },
-              {
-                id: '3',
-                heading: 'superb service',
-                description: 'this service is awesome',
-                image: {
-                  src:
-                    'https://assets.vroomcdn.com/static-rebrand/img/homepage/new/value-3_3.png',
-                  alt: 'value 3',
-                },
-              },
-            ]}
-          />
+          <BulletPoints items={data.config.homeBulletpoints.content} />
         </Layout>
       );
     }}
@@ -105,6 +49,21 @@ const indexContentQuery = graphql`
           mileage
           images
           slug
+        }
+      }
+    }
+    config {
+      currency
+      homeBulletpoints {
+        visible
+        content {
+          id
+          heading
+          description
+          image {
+            src
+            alt
+          }
         }
       }
     }
