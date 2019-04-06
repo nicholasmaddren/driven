@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { graphql, StaticQuery } from 'gatsby';
 
 import Layout from '../components/Layout';
 import SEO from '../components/Seo';
@@ -64,128 +65,163 @@ const Contact = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   return (
-    <Layout>
-      <SEO title="Contact Us" />
-      <Container>
-        <StyledPageHeading>
-          <h1>Contact Us</h1>
-          <h3 className="font-weight__light">How can we help you?</h3>
-        </StyledPageHeading>
-        <StyledContactGrid>
-          <div>
-            <Panel>
-              <h4>Driven Teesside</h4>
-              <StyledContactItem>
-                <div className="icon-wrapper">
-                  <FontAwesomeIcon icon={faPhone} flip="horizontal" />
+    <StaticQuery
+      query={contactQuery}
+      render={data => {
+        return (
+          <Layout>
+            <SEO title="Contact Us" />
+            <Container>
+              <StyledPageHeading>
+                <h1>Contact Us</h1>
+                <h3 className="font-weight__light">How can we help you?</h3>
+              </StyledPageHeading>
+              <StyledContactGrid>
+                <div>
+                  {console.log(data)}
+                  {data.config.sites.map(site => (
+                    <Panel key={'contact-sites-' + site.name}>
+                      <h4>{site.name}</h4>
+                      <StyledContactItem>
+                        <div className="icon-wrapper">
+                          <FontAwesomeIcon icon={faPhone} flip="horizontal" />
+                        </div>
+                        <div className="content">
+                          <h5>Call Us</h5>
+                          <p className="margin__none">
+                            <strong>Sales: </strong>
+                            <a href={`tel:${site.phoneNumbers.sales}`}>
+                              {site.phoneNumbers.sales}
+                            </a>
+                          </p>
+                        </div>
+                      </StyledContactItem>
+                      <StyledContactItem>
+                        <div className="icon-wrapper">
+                          <FontAwesomeIcon icon={faMapMarker} />
+                        </div>
+                        <div className="content">
+                          <h5>Find Us</h5>
+                          <p className="margin__none">{site.locationAddress}</p>
+                        </div>
+                      </StyledContactItem>
+                      <StyledContactItem>
+                        <div className="icon-wrapper">
+                          <FontAwesomeIcon icon={faClock} />
+                        </div>
+                        <div className="content">
+                          <h5>Opening Times</h5>
+                          <table className="opening-times__table">
+                            <tbody>
+                              <tr>
+                                <td>Monday</td>
+                                <td>{site.openingTimes.monday}</td>
+                              </tr>
+                              <tr>
+                                <td>Tuesday</td>
+                                <td>{site.openingTimes.tuesday}</td>
+                              </tr>
+                              <tr>
+                                <td>Wednesday</td>
+                                <td>{site.openingTimes.wednesday}</td>
+                              </tr>
+                              <tr>
+                                <td>Thursday</td>
+                                <td>{site.openingTimes.thursday}</td>
+                              </tr>
+                              <tr>
+                                <td>Friday</td>
+                                <td>{site.openingTimes.friday}</td>
+                              </tr>
+                              <tr>
+                                <td>Saturday</td>
+                                <td>{site.openingTimes.saturday}</td>
+                              </tr>
+                              <tr>
+                                <td>Sunday</td>
+                                <td>{site.openingTimes.sunday}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </StyledContactItem>
+                    </Panel>
+                  ))}
                 </div>
-                <div className="content">
-                  <h5>Call Us</h5>
-                  <p className="margin__none">
-                    <strong>Sales:</strong> <a>01642 890900</a>
-                  </p>
+                <div>
+                  <Panel>
+                    <form>
+                      <Grid>
+                        <FormField>
+                          <label>Full Name</label>
+                          <Input
+                            type="text"
+                            value={fullName}
+                            onChange={value => setFullName(value)}
+                          />
+                        </FormField>
+                        <FormField>
+                          <label>Phone</label>
+                          <Input
+                            type="tel"
+                            value={phone}
+                            onChange={value => setPhone(value)}
+                          />
+                        </FormField>
+                      </Grid>
+                      <FormField>
+                        <label>Email</label>
+                        <Input
+                          type="email"
+                          value={email}
+                          onChange={value => setEmail(value)}
+                        />
+                      </FormField>
+                      <FormField>
+                        <label>Message</label>
+                        <TextArea
+                          value={message}
+                          onChange={value => setMessage(value)}
+                        />
+                      </FormField>
+                      <Box justifyContent="end">
+                        <Button type="submit">
+                          Send Enquiry <FontAwesomeIcon icon={faAngleRight} />
+                        </Button>
+                      </Box>
+                    </form>
+                  </Panel>
                 </div>
-              </StyledContactItem>
-              <StyledContactItem>
-                <div className="icon-wrapper">
-                  <FontAwesomeIcon icon={faMapMarker} />
-                </div>
-                <div className="content">
-                  <h5>Find Us</h5>
-                  <p className="margin__none">
-                    2 Mandale Road, Stockton-on-Tees, TS17BZ
-                  </p>
-                </div>
-              </StyledContactItem>
-              <StyledContactItem>
-                <div className="icon-wrapper">
-                  <FontAwesomeIcon icon={faClock} />
-                </div>
-                <div className="content">
-                  <h5>Opening Times</h5>
-                  <table className="opening-times__table">
-                    <tr>
-                      <td>Monday</td>
-                      <td>9:00am - 5:00pm</td>
-                    </tr>
-                    <tr>
-                      <td>Tuesday</td>
-                      <td>9:00am - 5:00pm</td>
-                    </tr>
-                    <tr>
-                      <td>Wednesday</td>
-                      <td>9:00am - 5:00pm</td>
-                    </tr>
-                    <tr>
-                      <td>Thursday</td>
-                      <td>9:00am - 5:00pm</td>
-                    </tr>
-                    <tr>
-                      <td>Friday</td>
-                      <td>9:00am - 5:00pm</td>
-                    </tr>
-                    <tr>
-                      <td>Saturday</td>
-                      <td>9:00am - 5:00pm</td>
-                    </tr>
-                    <tr>
-                      <td>Sunday</td>
-                      <td>Closed</td>
-                    </tr>
-                  </table>
-                </div>
-              </StyledContactItem>
-            </Panel>
-          </div>
-          <div>
-            {' '}
-            <Panel>
-              <form>
-                <Grid>
-                  <FormField>
-                    <label>Full Name</label>
-                    <Input
-                      type="text"
-                      value={fullName}
-                      onChange={value => setFullName(value)}
-                    />
-                  </FormField>
-                  <FormField>
-                    <label>Phone</label>
-                    <Input
-                      type="tel"
-                      value={phone}
-                      onChange={value => setPhone(value)}
-                    />
-                  </FormField>
-                </Grid>
-                <FormField>
-                  <label>Email</label>
-                  <Input
-                    type="email"
-                    value={email}
-                    onChange={value => setEmail(value)}
-                  />
-                </FormField>
-                <FormField>
-                  <label>Message</label>
-                  <TextArea
-                    value={message}
-                    onChange={value => setMessage(value)}
-                  />
-                </FormField>
-                <Box justifyContent="end">
-                  <Button type="submit">
-                    Send Enquiry <FontAwesomeIcon icon={faAngleRight} />
-                  </Button>
-                </Box>
-              </form>
-            </Panel>
-          </div>
-        </StyledContactGrid>
-      </Container>
-    </Layout>
+              </StyledContactGrid>
+            </Container>
+          </Layout>
+        );
+      }}
+    />
   );
 };
+
+const contactQuery = graphql`
+  query {
+    config {
+      sites {
+        name
+        phoneNumbers {
+          sales
+        }
+        locationAddress
+        openingTimes {
+          monday
+          tuesday
+          wednesday
+          thursday
+          friday
+          saturday
+          sunday
+        }
+      }
+    }
+  }
+`;
 
 export default Contact;
