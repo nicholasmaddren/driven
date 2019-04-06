@@ -66,7 +66,7 @@ interface ICommonProps {
 
 interface IHeroProps extends ICommonProps {
   heading: string;
-  paragraph?: string;
+  description?: string;
 }
 
 const defaultProps: ICommonProps = {
@@ -86,7 +86,7 @@ const Hero: React.SFC<IHeroProps> = props => (
     <StyledContainer contentPosition={props.contentPosition}>
       <StyledContent textColor={props.textColor}>
         {props.heading && <h1>{props.heading}</h1>}
-        {props.paragraph && <p>{props.paragraph}</p>}
+        {props.description && <p>{props.description}</p>}
       </StyledContent>
       {props.children}
     </StyledContainer>
