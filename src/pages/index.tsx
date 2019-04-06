@@ -17,13 +17,15 @@ const IndexPage = () => (
         <Layout>
           <SEO title="Cars" keywords={[`dealership`, `website`, `react`]} />
           <Hero
-            heading="Experience clear and simple car buying and selling."
-            paragraph="Some other content"
-            contentPosition="center"
-            bgImage="https://www.carmax.com/~/media/images/carmax/com/Homepage/hero/hp-hero-shopper-on-car-lot-final.jpg?ts=20170228T175801Z"
-            bgPosition="center bottom"
-            bgColor1="rgba(0, 0, 0, 0.4)"
-            bgColorPosition="45deg"
+            heading={data.config.home.hero.heading}
+            description={data.config.home.hero.description}
+            contentPosition={data.config.home.hero.contentPosition}
+            bgImage={data.config.home.hero.background.image}
+            bgPosition={data.config.home.hero.background.imagePosition}
+            bgColor1={data.config.home.hero.background.color1}
+            bgColorPosition={
+              data.config.home.hero.background.colorGradientPosition
+            }
           >
             <VehicleSearch />
           </Hero>
@@ -53,8 +55,21 @@ const indexContentQuery = graphql`
       }
     }
     config {
-      currency
       home {
+        hero {
+          visible
+          heading
+          description
+          contentPosition
+          textColor
+          background {
+            image
+            imagePosition
+            color1
+            color2
+            colorGradientPosition
+          }
+        }
         bulletPoints {
           visible
           content {
