@@ -34,7 +34,7 @@ interface IVehicleItem {
     make: string;
     model: string;
     price: number;
-    images: string;
+    images: string[];
     year: number;
     mileage: number;
     slug: string;
@@ -68,7 +68,7 @@ const VehicleCarousel: React.SFC<IProps> = props => (
           <Link to={item.node.slug} key={item.node.id}>
             <VehicleItem
               m="20px"
-              featuredImage={item.node.images}
+              featuredImage={item.node.images[0]}
               {...item.node}
             />
           </Link>
