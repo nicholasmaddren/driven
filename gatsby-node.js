@@ -13,9 +13,7 @@ exports.sourceNodes = async ({ actions }) => {
 
   await axios
     .get(
-      `https://aclo70943f.execute-api.us-east-2.amazonaws.com/prod/cars/${
-        process.env.USER_ID
-      }`
+      `${process.env.API_URL}/cars?dealership_id=${process.env.DEALERSHIP_ID}`
     )
     .then(res => {
       if (!res.data.length) {
@@ -130,34 +128,41 @@ exports.sourceNodes = async ({ actions }) => {
 
   (async function() {
     // fetch raw data from the dealership-info api
-    // const fetchSiteData = () => get(`http://localhost:3000/dealership-info`);
-    // // await for results
-    // const res = await fetchSiteData();
+    const fetchConfigData = () =>
+      axios.get(
+        `${process.env.API_URL}/config?dealership_id=${
+          process.env.DEALERSHIP_ID
+        }`
+      );
+    // await for results
+    const res = await fetchConfigData();
+
+    const { country, currency, home } = res.data;
 
     // Create your node object
-    const dealershipInfoNode = {
+    const configNode = {
       // Required fields
-      // id: res.data.orgId.toString(),
-      id: 'hg67js',
+      id: 'config',
       parent: `__SOURCE__`,
       internal: {
-        type: `DealershipInfo`,
+        type: `Config`,
       },
       children: [],
-      country: 'US',
-      currency: '£',
+      country,
+      currency,
+      home,
     };
 
     // Get content digest of node. (Required field)
     const contentDigest = crypto
       .createHash(`md5`)
-      .update(JSON.stringify(dealershipInfoNode))
+      .update(JSON.stringify(configNode))
       .digest(`hex`);
     // add it to userNode
-    dealershipInfoNode.internal.contentDigest = contentDigest;
+    configNode.internal.contentDigest = contentDigest;
 
     // Create node with the gatsby createNode() API
-    createNode(dealershipInfoNode);
+    createNode(configNode);
   })();
   return;
 };
