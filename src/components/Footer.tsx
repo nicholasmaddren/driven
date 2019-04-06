@@ -130,7 +130,7 @@ const Footer: FC<IFooterProps> = props => (
         <hr />
         <StyledPageLinks>
           {props.pageLinks.map(pageLink => (
-            <li>
+            <li key={pageLink.name}>
               <Link to={pageLink.to}>{pageLink.name}</Link>
             </li>
           ))}
