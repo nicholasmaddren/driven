@@ -137,8 +137,6 @@ exports.sourceNodes = async ({ actions }) => {
     // await for results
     const res = await fetchConfigData();
 
-    const { country, currency, home } = res.data;
-
     // Create your node object
     const configNode = {
       // Required fields
@@ -148,9 +146,7 @@ exports.sourceNodes = async ({ actions }) => {
         type: `Config`,
       },
       children: [],
-      country,
-      currency,
-      home,
+      ...res.data,
     };
 
     // Get content digest of node. (Required field)
