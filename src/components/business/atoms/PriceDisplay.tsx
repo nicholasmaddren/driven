@@ -8,11 +8,11 @@ interface IProps {
 
 const PriceDisplay: React.SFC<IProps> = props => (
   <StaticQuery
-    query={dealershipCurrencyQuery}
+    query={configCurrencyQuery}
     render={data => {
       return (
         <>
-          {data.dealershipInfo.currency}
+          {data.config.currency}
           {numeral(props.value).format('0,0')}
         </>
       );
@@ -22,9 +22,9 @@ const PriceDisplay: React.SFC<IProps> = props => (
 
 export default PriceDisplay;
 
-const dealershipCurrencyQuery = graphql`
+const configCurrencyQuery = graphql`
   query {
-    dealershipInfo {
+    config {
       currency
     }
   }
