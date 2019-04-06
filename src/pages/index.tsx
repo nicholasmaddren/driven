@@ -29,7 +29,7 @@ const IndexPage = () => (
           </Hero>
           <VehicleByBrand cars={data.allCars.edges} />
           <VehicleCarousel vehicleItems={data.allCars.edges} />
-          <BulletPoints items={data.config.homeBulletpoints.content} />
+          <BulletPoints items={data.config.home.bulletPoints.content} />
         </Layout>
       );
     }}
@@ -54,15 +54,17 @@ const indexContentQuery = graphql`
     }
     config {
       currency
-      homeBulletpoints {
-        visible
-        content {
-          id
-          heading
-          description
-          image {
-            src
-            alt
+      home {
+        bulletPoints {
+          visible
+          content {
+            id
+            heading
+            description
+            image {
+              src
+              alt
+            }
           }
         }
       }
