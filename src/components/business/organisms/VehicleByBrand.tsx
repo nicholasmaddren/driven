@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
+import { navigate } from 'gatsby';
 
 const StyledVehicleByBrand = styled.div`
   padding: 40px 80px;
@@ -12,7 +13,7 @@ const StyledBrandContainer = styled.div`
   grid-gap: 20px;
 `;
 
-const StyledBrandItem = styled.div`
+const StyledBrandItem = styled.button`
   display: flex;
   justify-content: center;
   padding: 20px;
@@ -33,20 +34,29 @@ const StyledBrandItem = styled.div`
 `;
 
 interface IVehicleByBrandProps {
-  brands: { image: string; name: string }[];
+  cars: any[];
 }
 
-const VehicleByBrand: FC<IVehicleByBrandProps> = props => (
-  <StyledVehicleByBrand>
-    <h3>Shop by brand</h3>
-    <StyledBrandContainer>
-      {props.brands.map(brand => (
-        <StyledBrandItem>
-          <img src={brand.image} alt={brand.name} />
-        </StyledBrandItem>
-      ))}
-    </StyledBrandContainer>
-  </StyledVehicleByBrand>
-);
+const VehicleByBrand: FC<IVehicleByBrandProps> = props => {
+  const brands = props.cars.map(car => car.node.make);
+  const uniqueBrandsArray = brands.filter(
+    (brand, index) => brands.indexOf(brand) === index
+  );
+  return (
+    <StyledVehicleByBrand>
+      <h3>Shop by Brand</h3>
+      <StyledBrandContainer>
+        {uniqueBrandsArray.map(brand => (
+          <StyledBrandItem
+            onClick={() => navigate(`/cars/?page=1&query=${brand}`)}
+            key={`vehicle-by-brand-${brand}`}
+          >
+            {brand}
+          </StyledBrandItem>
+        ))}
+      </StyledBrandContainer>
+    </StyledVehicleByBrand>
+  );
+};
 
 export default VehicleByBrand;
