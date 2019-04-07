@@ -79,6 +79,13 @@ const StyledPageLinks = styled.ul`
   }
 `;
 
+interface ISocialLinks {
+  facebook: string;
+  instagram: string;
+  twitter: string;
+  youtube: string;
+}
+
 interface ICommonProps {
   bgColor: string;
   textColor: string;
@@ -87,6 +94,8 @@ interface ICommonProps {
 interface IFooterProps extends ICommonProps {
   pageLinks: { name: string; to: string }[];
   logoImage: string;
+  copyright: string;
+  socialLinks: ISocialLinks;
   siteTitle: string;
 }
 
@@ -96,29 +105,29 @@ const Footer: FC<IFooterProps> = props => (
       <div>
         <StyledFooterBrand>
           <img className="logo" src={props.logoImage} alt={props.siteTitle} />
-          <small>© 2019 DRIVEN GROUP. ALL RIGHTS RESERVED.</small>
+          <small>{props.copyright}</small>
         </StyledFooterBrand>
 
         <StyledSocialLinks>
           <li>
-            <Link to="/">
+            <a href={props.socialLinks.facebook} target="_blank">
               <FontAwesomeIcon icon={faFacebook} />
-            </Link>
+            </a>
           </li>
           <li>
-            <Link to="/">
+            <a href={props.socialLinks.instagram} target="_blank">
               <FontAwesomeIcon icon={faInstagram} />
-            </Link>
+            </a>
           </li>
           <li>
-            <Link to="/">
+            <a href={props.socialLinks.twitter} target="_blank">
               <FontAwesomeIcon icon={faTwitter} />
-            </Link>
+            </a>
           </li>
           <li>
-            <Link to="/">
+            <a href={props.socialLinks.youtube} target="_blank">
               <FontAwesomeIcon icon={faYoutube} />
-            </Link>
+            </a>
           </li>
         </StyledSocialLinks>
       </div>

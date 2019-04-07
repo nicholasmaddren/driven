@@ -73,10 +73,24 @@ const Layout: React.SFC = props => (
   <ThemeProvider theme={theme}>
     <StaticQuery
       query={graphql`
-        query SiteTitleQuery {
+        query LayoutQuery {
           site {
             siteMetadata {
               title
+            }
+          }
+          config {
+            footer {
+              logo
+              copyright
+              backgroundColor
+              textColor
+              socialLinks {
+                facebook
+                instagram
+                twitter
+                youtube
+              }
             }
           }
         }
@@ -91,9 +105,11 @@ const Layout: React.SFC = props => (
           <div>{props.children}</div>
           <Footer
             siteTitle={data.site.siteMetadata.title}
-            logoImage="https://drivengroup.co.uk/wp-content/themes/driven/dist/images/logo_aa5ba1d7.png"
-            bgColor="#041022"
-            textColor="#fff"
+            logoImage={data.config.footer.logo}
+            copyright={data.config.footer.copyright}
+            socialLinks={data.config.footer.socialLinks}
+            bgColor={data.config.footer.backgroundColor}
+            textColor={data.config.footer.textColor}
             pageLinks={[
               { name: 'Home', to: '/' },
               { name: 'Cars For Sale', to: '/cars' },
