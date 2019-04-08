@@ -20,6 +20,7 @@ type IType = 'submit' | 'button';
 
 interface IButtonProps {
   type?: IType;
+  onClick?: () => void;
 }
 
 const defaultProps: IButtonProps = {
@@ -27,7 +28,9 @@ const defaultProps: IButtonProps = {
 };
 
 const Button: React.SFC<IButtonProps> = props => (
-  <StyledButton type={props.type}>{props.children}</StyledButton>
+  <StyledButton type={props.type} onClick={props.onClick}>
+    {props.children}
+  </StyledButton>
 );
 
 Button.defaultProps = defaultProps;

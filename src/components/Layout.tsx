@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FC } from 'react';
 import { StaticQuery, graphql } from 'gatsby';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
@@ -69,7 +69,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const Layout: React.SFC = props => (
+const Layout: FC = props => (
   <ThemeProvider theme={theme}>
     <StaticQuery
       query={graphql`

@@ -45,15 +45,14 @@ const StyledSpecContainer = styled.div`
 `;
 
 interface IProps {
-  id: number;
   make: string;
   model: string;
   price: number;
   featuredImage: string;
   year: number;
   mileage: number;
-  slug: string;
-  m: string;
+  slug?: string;
+  m?: string;
 }
 
 const VehicleCarousel: React.SFC<IProps> = props => (

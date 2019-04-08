@@ -13,10 +13,10 @@ import qs from 'qs';
 import { navigate } from '@reach/router';
 import _ from 'lodash';
 
-import Layout from '../components/Layout';
-import SEO from '../components/Seo';
-import VehicleItem from '../components/business/organisms/VehicleItem';
-import RefinementList from '../components/business/instant-search/widgets/RefinementList';
+import Layout from '../../components/Layout';
+import SEO from '../../components/Seo';
+import VehicleItem from '../../components/business/organisms/VehicleItem';
+import RefinementList from '../../components/business/instant-search/widgets/RefinementList';
 
 const StyledContainer = styled.div`
   display: grid;
