@@ -2,30 +2,41 @@ import * as React from 'react';
 import { graphql } from 'gatsby';
 import styled from 'styled-components';
 import { navigate } from '@reach/router';
+import Carousel from 'nuka-carousel';
 
 import Layout from '../components/Layout';
 import Button from '../components/Button';
 import AppContext from '../context/AppContext';
+import PriceDisplay from '../components/business/atoms/PriceDisplay';
+import MileageDisplay from '../components/business/atoms/MileageDisplay';
 
 const StyledListingView = styled.div`
+  overflow: hidden;
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-gap: 40px;
 `;
 
 const StyledImageSlider = styled.div`
-  img {
-    width: 100%;
+  .slider-list {
+    width: auto !important;
   }
 `;
 
 const StyledInfo = styled.div`
-  padding: 20px 0;
+  padding: 40px;
+`;
+
+const StyledPriceMileage = styled.div`
+  display: flex;
+  justify-content: space-between;
+  .price {
+  }
 `;
 
 export default ({ data }) => {
+  const { cars } = data;
   const handleEnquiry = changeSelectedCar => {
-    changeSelectedCar(data.cars);
+    changeSelectedCar(cars);
     navigate('question');
   };
   return (
@@ -34,13 +45,34 @@ export default ({ data }) => {
         <Layout>
           <StyledListingView>
             <StyledImageSlider>
-              <img src={data.cars.images[0]} />
+              <Carousel>
+                {cars.images.map(image => (
+                  <img
+                    src={image}
+                    alt={`${cars.make} ${cars.model}`}
+                    onLoad={() => {
+                      window.dispatchEvent(new Event('resize'));
+                    }}
+                  />
+                ))}
+              </Carousel>
             </StyledImageSlider>
             <StyledInfo>
-              <h3>{data.cars.make}</h3>
-              <p>{data.cars.model}</p>
-              <p>{data.cars.price}</p>
-              <p>{data.cars.mileage}</p>
+              <h1>
+                {cars.year} {cars.make} {cars.model}
+              </h1>
+              <StyledPriceMileage>
+                <div className="price">
+                  <h3>
+                    <PriceDisplay value={cars.price} />
+                  </h3>
+                </div>
+                <div className="mileage">
+                  <h3>
+                    <MileageDisplay value={cars.mileage} />
+                  </h3>
+                </div>
+              </StyledPriceMileage>
               <Button onClick={() => handleEnquiry(value.changeSelectedCar)}>
                 Ask a question
               </Button>
@@ -62,6 +94,9 @@ export const query = graphql`
       mileage
       year
       images
+    }
+    config {
+      currency
     }
   }
 `;

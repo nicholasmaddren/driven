@@ -69,6 +69,7 @@ const VehicleCarousel: React.SFC<IProps> = props => (
             <VehicleItem
               m="20px"
               featuredImage={item.node.images[0]}
+              imageOnLoadResize={true}
               {...item.node}
             />
           </Link>

@@ -4,6 +4,10 @@ const defaultState = {
   selectedCar: {
     make: null,
     model: null,
+    price: null,
+    images: null,
+    year: null,
+    mileage: null,
   },
   changeSelectedCar: ({}) => {},
 };
@@ -15,6 +19,10 @@ class AppProvider extends React.Component {
     selectedCar: {
       make: null,
       model: null,
+      price: null,
+      images: null,
+      year: null,
+      mileage: null,
     },
   };
 

@@ -53,26 +53,35 @@ interface IProps {
   mileage: number;
   slug?: string;
   m?: string;
+  imageOnLoadResize?: boolean;
 }
 
-const VehicleCarousel: React.SFC<IProps> = props => (
-  <StyledCarouselItem m={props.m}>
-    <StyledImageContainer>
-      <img src={props.featuredImage} />
-    </StyledImageContainer>
-    <StyledContentContainer>
-      <h4>
-        {props.make} {props.model}
-      </h4>
-      <StyledSpecContainer>
-        <div>
-          <Badge mr={2}>{props.year}</Badge>
-          <MileageDisplay value={props.mileage} />
-        </div>
-        <PriceDisplay value={props.price} />
-      </StyledSpecContainer>
-    </StyledContentContainer>
-  </StyledCarouselItem>
-);
+const VehicleCarousel: React.SFC<IProps> = props => {
+  const handleImageOnLoad = () => {
+    window.dispatchEvent(new Event('resize'));
+  };
+  return (
+    <StyledCarouselItem m={props.m}>
+      <StyledImageContainer>
+        <img
+          src={props.featuredImage}
+          onLoad={props.imageOnLoadResize && handleImageOnLoad}
+        />
+      </StyledImageContainer>
+      <StyledContentContainer>
+        <h4>
+          {props.make} {props.model}
+        </h4>
+        <StyledSpecContainer>
+          <div>
+            <Badge mr={2}>{props.year}</Badge>
+            <MileageDisplay value={props.mileage} />
+          </div>
+          <PriceDisplay value={props.price} />
+        </StyledSpecContainer>
+      </StyledContentContainer>
+    </StyledCarouselItem>
+  );
+};
 
 export default VehicleCarousel;
