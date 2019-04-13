@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
     color: ${theme.vars.color.grey4};
     background-color: ${theme.vars.color.grey1};
     font-size: 16px;
+    line-height: 1.3;
   }
 
   h1,h2,h3,h4,h5,h6 {
