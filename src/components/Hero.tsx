@@ -18,7 +18,6 @@ const StyledHero = styled.div<ICommonProps>`
   display: flex;
   justify-content: ${({ contentPosition }) =>
     getGetFlexPosition(contentPosition)};
-  padding: 40px 80px;
   text-align: ${({ contentPosition }) => contentPosition};
   background: linear-gradient(
       ${({ bgColorPosition }) => bgColorPosition},
@@ -34,21 +33,27 @@ const StyledContainer = styled.div<ICommonProps>`
   flex-wrap: wrap;
   justify-content: ${({ contentPosition }) =>
     getGetFlexPosition(contentPosition)};
-  width: 50%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 40px;
 `;
 
 const StyledContent = styled.div<ICommonProps>`
-  color: ${({ textColor }) => textColor};
-  font-weight: 600;
-  line-height: 1.2;
-  text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
-  margin-bottom: 40px;
-  h1 {
-    font-size: 55px;
-  }
-  p {
-    font-size: 20px;
-    margin: 0;
+  width: 60%;
+  .meta {
+    color: ${({ textColor }) => textColor};
+    font-weight: 600;
+    line-height: 1.2;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+    margin-bottom: 40px;
+    h1 {
+      font-size: 55px;
+    }
+    p {
+      font-size: 20px;
+      margin: 0;
+    }
   }
 `;
 
@@ -85,10 +90,12 @@ const Hero: React.SFC<IHeroProps> = props => (
   >
     <StyledContainer contentPosition={props.contentPosition}>
       <StyledContent textColor={props.textColor}>
-        {props.heading && <h1>{props.heading}</h1>}
-        {props.description && <p>{props.description}</p>}
+        <div className="meta">
+          {props.heading && <h1>{props.heading}</h1>}
+          {props.description && <p>{props.description}</p>}
+        </div>
+        {props.children}
       </StyledContent>
-      {props.children}
     </StyledContainer>
   </StyledHero>
 );

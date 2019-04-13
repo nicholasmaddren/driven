@@ -8,11 +8,6 @@ import Toyota from '../../../images/brands/toyota.png';
 import Ford from '../../../images/brands/ford.png';
 import MercedesBenz from '../../../images/brands/mercedes-benz.png';
 
-const StyledVehicleByBrand = styled.div`
-  padding: 40px 80px;
-  background-color: #fff;
-`;
-
 const StyledBrandContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -49,7 +44,7 @@ const VehicleByBrand: FC<IVehicleByBrandProps> = props => {
     (brand, index) => brands.indexOf(brand) === index
   );
   return (
-    <StyledVehicleByBrand>
+    <>
       <h3>Shop by Brand</h3>
       <StyledBrandContainer>
         {uniqueBrandsArray.map(brand => {
@@ -67,7 +62,7 @@ const VehicleByBrand: FC<IVehicleByBrandProps> = props => {
           return brand;
         })}
       </StyledBrandContainer>
-    </StyledVehicleByBrand>
+    </>
   );
 };
 

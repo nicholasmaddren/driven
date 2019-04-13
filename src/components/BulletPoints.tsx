@@ -2,12 +2,9 @@ import styled from 'styled-components';
 import * as React from 'react';
 
 const StyledBulletPoints = styled.div`
-  padding: 40px 80px;
-  background: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid ${props => props.theme.vars.color.grey2};
 `;
 
 const StyledtItem = styled.div`

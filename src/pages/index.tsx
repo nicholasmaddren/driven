@@ -8,6 +8,7 @@ import VehicleSearch from '../components/business/organisms/VehicleSearch';
 import VehicleCarousel from '../components/business/organisms/VehicleCarousel';
 import BulletPoints from '../components/BulletPoints';
 import VehicleByBrand from '../components/business/organisms/VehicleByBrand';
+import Section from '../components/Section';
 
 const IndexPage = () => (
   <StaticQuery
@@ -29,9 +30,15 @@ const IndexPage = () => (
           >
             <VehicleSearch />
           </Hero>
-          <VehicleByBrand cars={data.allCars.edges} />
-          <VehicleCarousel vehicleItems={data.allCars.edges} />
-          <BulletPoints items={data.config.home.bulletPoints.content} />
+          <Section backgroundColor="#fff">
+            <VehicleByBrand cars={data.allCars.edges} />
+          </Section>
+          <Section>
+            <VehicleCarousel vehicleItems={data.allCars.edges} />
+          </Section>
+          <Section backgroundColor="#fff">
+            <BulletPoints items={data.config.home.bulletPoints.content} />
+          </Section>
         </Layout>
       );
     }}
