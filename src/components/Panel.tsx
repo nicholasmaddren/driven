@@ -6,10 +6,12 @@ const StyledPanel = styled.div<IPanelProps>`
   border: 1px solid ${({ theme }) => theme.vars.color.grey2};
   border-radius: ${({ theme }) => theme.vars.border.radius.default};
   padding: ${({ padding }) => padding};
+  margin: ${({ margin }) => margin};
 `;
 
 interface IPanelProps {
   padding?: string;
+  margin?: string;
 }
 
 const defaultProps = {
@@ -17,7 +19,9 @@ const defaultProps = {
 };
 
 const Panel: FC<IPanelProps> = props => (
-  <StyledPanel padding={props.padding}>{props.children}</StyledPanel>
+  <StyledPanel padding={props.padding} margin={props.margin}>
+    {props.children}
+  </StyledPanel>
 );
 
 Panel.defaultProps = defaultProps;
