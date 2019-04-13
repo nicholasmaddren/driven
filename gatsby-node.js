@@ -10,10 +10,9 @@ const path = require('path');
 
 exports.sourceNodes = async ({ actions }) => {
   const { createNode, createPage } = actions;
-  console.log(`${process.env.API_URL}/cars/external/${process.env.USER_ID}`);
   await axios
-    .get(`${process.env.API_URL}/cars/external/${process.env.USER_ID}`, {
-      headers: { Authorization: process.env.TOKEN },
+    .get(`${process.env.API_URL}/cars/external/${process.env.DEALERSHIP_ID}`, {
+      headers: { Authorization: `Bearer ${process.env.TOKEN}` },
     })
     .then(res => {
       if (!res.data.length) {
@@ -137,10 +136,10 @@ exports.sourceNodes = async ({ actions }) => {
       axios
         .get(
           `${process.env.API_URL}/dealership/external/config/${
-            process.env.USER_ID
+            process.env.DEALERSHIP_ID
           }`,
           {
-            headers: { Authorization: process.env.TOKEN },
+            headers: { Authorization: `Bearer ${process.env.TOKEN}` },
           }
         )
         .catch(e => console.log(e));
