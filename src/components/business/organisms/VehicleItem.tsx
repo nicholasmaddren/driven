@@ -77,7 +77,9 @@ const VehicleCarousel: React.SFC<IProps> = props => {
             <Badge mr={2}>{props.year}</Badge>
             <MileageDisplay value={props.mileage} />
           </div>
-          <PriceDisplay value={props.price} />
+          <strong>
+            <PriceDisplay value={props.price} />
+          </strong>
         </StyledSpecContainer>
       </StyledContentContainer>
     </StyledCarouselItem>
