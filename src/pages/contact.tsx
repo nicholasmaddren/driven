@@ -78,7 +78,6 @@ const Contact = () => {
               </StyledPageHeading>
               <StyledContactGrid>
                 <div>
-                  {console.log(data)}
                   {data.config.sites.map(site => (
                     <Panel key={'contact-sites-' + site.name}>
                       <h4>{site.name}</h4>
