@@ -12,22 +12,23 @@ exports.sourceNodes = async ({ actions }) => {
   const { createNode, createPage } = actions;
 
   await axios
-    .get(
-      `${process.env.API_URL}/cars?dealership_id=${process.env.DEALERSHIP_ID}`
-    )
+    .get(`${process.env.API_URL}/cars/external/${process.env.USER_ID}`, {
+      headers: { Authorization: process.env.TOKEN },
+    })
     .then(res => {
       if (!res.data.length) {
         res.data.push({
           vin: '12345',
           make: 'BMW',
           model: '3 Series',
-          variant: '320d M Sport',
+          trim: '320d M Sport',
           description: 'Lovely example',
           color: 'red',
           price: 14895,
           year: 2016,
           mileage: 22308,
           doors: 5,
+          seats,
           bodyType: 'Saloon',
           fuelType: 'Diesel',
           engineSize: 1995,
@@ -38,8 +39,9 @@ exports.sourceNodes = async ({ actions }) => {
           condition: 'Used',
           interiorFeatures: 'Blutooth - Heated Seats - Air Conditioning',
           exteriorFeatures: 'Alloy Wheels - Xeonon Headlights',
-          images:
+          images: [
             'https://inchcapecdn.azureedge.net/cdn-images/stock/a/au68jsy-1-xl.jpg',
+          ],
           slug: 'cars/bmw-3-series-12345',
         });
       }
@@ -132,9 +134,12 @@ exports.sourceNodes = async ({ actions }) => {
     // fetch raw data from the dealership-info api
     const fetchConfigData = () =>
       axios.get(
-        `${process.env.API_URL}/config?dealership_id=${
-          process.env.DEALERSHIP_ID
-        }`
+        `${process.env.API_URL}/dealership/external/config/${
+          process.env.USER_ID
+        }`,
+        {
+          headers: { Authorization: process.env.TOKEN },
+        }
       );
     // await for results
     const res = await fetchConfigData();
