@@ -1,32 +1,10 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import Carousel from 'nuka-carousel';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faChevronLeft,
-  faChevronRight,
-} from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'gatsby';
 
 import VehicleItem from './VehicleItem';
-
-const StyledCarousel = styled.div`
-  background: ${props => props.theme.vars.color.grey1};
-  padding: 40px 80px;
-`;
-
-const StyledControl = styled.button`
-  background: ${props => props.theme.vars.color.grey4};
-  border: 0;
-  border-radius: 100%;
-  height: 40px;
-  width: 40px;
-  cursor: pointer;
-  svg {
-    font-size: 20px;
-    color: #fff;
-  }
-`;
+import CarouselControl from '../../Carousel/CarouselControl';
 
 interface IVehicleItem {
   node: {
@@ -46,20 +24,16 @@ interface IProps {
 }
 
 const VehicleCarousel: React.SFC<IProps> = props => (
-  <StyledCarousel>
+  <>
     <h3>Latest Cars</h3>
     <Carousel
       slidesToShow={4}
       slidesToScroll={4}
       renderCenterLeftControls={({ previousSlide }) => (
-        <StyledControl onClick={previousSlide}>
-          <FontAwesomeIcon icon={faChevronLeft} />
-        </StyledControl>
+        <CarouselControl icon="prev" onClick={previousSlide} />
       )}
       renderCenterRightControls={({ nextSlide }) => (
-        <StyledControl onClick={nextSlide}>
-          <FontAwesomeIcon icon={faChevronRight} />
-        </StyledControl>
+        <CarouselControl icon="next" onClick={nextSlide} />
       )}
       renderBottomCenterControls={() => null}
     >
@@ -76,7 +50,7 @@ const VehicleCarousel: React.SFC<IProps> = props => (
         );
       })}
     </Carousel>
-  </StyledCarousel>
+  </>
 );
 
 export default VehicleCarousel;
