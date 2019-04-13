@@ -128,19 +128,22 @@ exports.sourceNodes = async ({ actions }) => {
           },
         });
       });
-    });
+    })
+    .catch(e => console.log(e));
 
   (async function() {
     // fetch raw data from the dealership-info api
     const fetchConfigData = () =>
-      axios.get(
-        `${process.env.API_URL}/dealership/external/config/${
-          process.env.USER_ID
-        }`,
-        {
-          headers: { Authorization: process.env.TOKEN },
-        }
-      );
+      axios
+        .get(
+          `${process.env.API_URL}/dealership/external/config/${
+            process.env.USER_ID
+          }`,
+          {
+            headers: { Authorization: process.env.TOKEN },
+          }
+        )
+        .catch(e => console.log(e));
     // await for results
     const res = await fetchConfigData();
 
