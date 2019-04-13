@@ -10,7 +10,7 @@ const path = require('path');
 
 exports.sourceNodes = async ({ actions }) => {
   const { createNode, createPage } = actions;
-
+  console.log(`${process.env.API_URL}/cars/external/${process.env.USER_ID}`);
   await axios
     .get(`${process.env.API_URL}/cars/external/${process.env.USER_ID}`, {
       headers: { Authorization: process.env.TOKEN },
