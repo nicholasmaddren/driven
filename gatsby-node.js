@@ -12,7 +12,7 @@ exports.sourceNodes = async ({ actions }) => {
   const { createNode, createPage } = actions;
   await axios
     .get(`${process.env.API_URL}/cars/external/${process.env.DEALERSHIP_ID}`, {
-      headers: { Authorization: process.env.TOKEN },
+      headers: { Authorization: `Bearer ${process.env.TOKEN}` },
     })
     .then(res => {
       if (!res.data.length) {
@@ -139,7 +139,7 @@ exports.sourceNodes = async ({ actions }) => {
             process.env.DEALERSHIP_ID
           }`,
           {
-            headers: { Authorization: process.env.TOKEN },
+            headers: { Authorization: `Bearer ${process.env.TOKEN}` },
           }
         )
         .catch(e => console.log(e));
