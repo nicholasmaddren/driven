@@ -131,6 +131,7 @@ exports.sourceNodes = async ({ actions }) => {
     .catch(e => console.log(e));
 
   (async function() {
+    console.log('Starting config gatsby-node');
     // fetch raw data from the dealership-info api
     const fetchConfigData = () =>
       axios
@@ -145,8 +146,6 @@ exports.sourceNodes = async ({ actions }) => {
         .catch(e => console.log(e));
     // await for results
     const res = await fetchConfigData();
-
-    console.log('CONFIG', res.data);
 
     // Create your node object
     const configNode = {
