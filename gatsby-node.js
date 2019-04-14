@@ -133,44 +133,40 @@ exports.sourceNodes = async ({ actions }) => {
   (async function() {
     console.log('Starting config gatsby-node');
     // fetch raw data from the dealership-info api
-    const fetchConfigData = () =>
-      axios
-        .get(
-          `${process.env.API_URL}/dealership/external/config/${
-            process.env.DEALERSHIP_ID
-          }`,
-          {
-            headers: { Authorization: `Bearer ${process.env.TOKEN}` },
-          }
-        )
-        .catch(e => console.log(e));
-    // await for results
-    const res = await fetchConfigData();
+    axios
+      .get(
+        `${process.env.API_URL}/dealership/external/config/${
+          process.env.DEALERSHIP_ID
+        }`,
+        {
+          headers: { Authorization: `Bearer ${process.env.TOKEN}` },
+        }
+      )
+      .then(res => {
+        // Create your node object
+        const configNode = {
+          // Required fields
+          id: 'config',
+          parent: `__SOURCE__`,
+          internal: {
+            type: `Config`,
+          },
+          children: [],
+          ...res.data,
+        };
 
-    console.log(res);
+        // Get content digest of node. (Required field)
+        const contentDigest = crypto
+          .createHash(`md5`)
+          .update(JSON.stringify(configNode))
+          .digest(`hex`);
+        // add it to userNode
+        configNode.internal.contentDigest = contentDigest;
 
-    // Create your node object
-    const configNode = {
-      // Required fields
-      id: 'config',
-      parent: `__SOURCE__`,
-      internal: {
-        type: `Config`,
-      },
-      children: [],
-      ...res.data,
-    };
-
-    // Get content digest of node. (Required field)
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(configNode))
-      .digest(`hex`);
-    // add it to userNode
-    configNode.internal.contentDigest = contentDigest;
-
-    // Create node with the gatsby createNode() API
-    createNode(configNode);
+        // Create node with the gatsby createNode() API
+        createNode(configNode);
+      })
+      .catch(e => console.log(e));
   })();
   return;
 };
