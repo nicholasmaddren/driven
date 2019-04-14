@@ -146,6 +146,8 @@ exports.sourceNodes = async ({ actions }) => {
     // await for results
     const res = await fetchConfigData();
 
+    console.log('CONFIG', res.data);
+
     // Create your node object
     const configNode = {
       // Required fields
