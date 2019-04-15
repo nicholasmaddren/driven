@@ -8,9 +8,9 @@ import Header from './Header';
 import Footer from './Footer';
 
 const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700');
   ${normalize}
   body {
-    @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700');
     font-family: ${theme.vars.font.family};
     color: ${theme.vars.color.grey4};
     background-color: ${theme.vars.color.grey1};
