@@ -1,14 +1,12 @@
 import React, { FC } from 'react';
 import { StaticQuery, graphql } from 'gatsby';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
-import { normalize } from 'styled-normalize';
 
 import theme from '../theme';
 import Header from './Header';
 import Footer from './Footer';
 
 const GlobalStyle = createGlobalStyle`
-  ${normalize}
   body {
     @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700');
     font-family: ${theme.vars.font.family};
@@ -72,58 +70,56 @@ const GlobalStyle = createGlobalStyle`
 
 const Layout: FC = props => (
   <ThemeProvider theme={theme}>
-    <>
-      <GlobalStyle />
-      <StaticQuery
-        query={graphql`
-          query LayoutQuery {
-            site {
-              siteMetadata {
-                title
-              }
+    <StaticQuery
+      query={graphql`
+        query LayoutQuery {
+          site {
+            siteMetadata {
+              title
             }
-            config {
-              footer {
-                logo
-                copyright
-                backgroundColor
-                textColor
-                socialLinks {
-                  facebook
-                  instagram
-                  twitter
-                  youtube
-                }
+          }
+          config {
+            footer {
+              logo
+              copyright
+              backgroundColor
+              textColor
+              socialLinks {
+                facebook
+                instagram
+                twitter
+                youtube
               }
             }
           }
-        `}
-        render={data => (
-          <>
-            <Header
-              siteTitle={data.site.siteMetadata.title}
-              logoImage="https://drivengroup.co.uk/wp-content/themes/driven/dist/images/logo-dark_1125fb4a.png"
-            />
-            <div>{props.children}</div>
-            <Footer
-              siteTitle={data.site.siteMetadata.title}
-              logoImage={data.config.footer.logo}
-              copyright={data.config.footer.copyright}
-              socialLinks={data.config.footer.socialLinks}
-              bgColor={data.config.footer.backgroundColor}
-              textColor={data.config.footer.textColor}
-              pageLinks={[
-                { name: 'Home', to: '/' },
-                { name: 'Cars For Sale', to: '/cars' },
-                { name: 'Sell Your Car', to: '/sell-your-car' },
-                { name: 'About Us', to: '/about-us' },
-                { name: 'Contact', to: '/contact' },
-              ]}
-            />
-          </>
-        )}
-      />
-    </>
+        }
+      `}
+      render={data => (
+        <>
+          <GlobalStyle />
+          <Header
+            siteTitle={data.site.siteMetadata.title}
+            logoImage="https://drivengroup.co.uk/wp-content/themes/driven/dist/images/logo-dark_1125fb4a.png"
+          />
+          <div>{props.children}</div>
+          <Footer
+            siteTitle={data.site.siteMetadata.title}
+            logoImage={data.config.footer.logo}
+            copyright={data.config.footer.copyright}
+            socialLinks={data.config.footer.socialLinks}
+            bgColor={data.config.footer.backgroundColor}
+            textColor={data.config.footer.textColor}
+            pageLinks={[
+              { name: 'Home', to: '/' },
+              { name: 'Cars For Sale', to: '/cars' },
+              { name: 'Sell Your Car', to: '/sell-your-car' },
+              { name: 'About Us', to: '/about-us' },
+              { name: 'Contact', to: '/contact' },
+            ]}
+          />
+        </>
+      )}
+    />
   </ThemeProvider>
 );
 
