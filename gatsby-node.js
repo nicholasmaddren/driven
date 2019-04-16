@@ -55,8 +55,8 @@ exports.sourceNodes = async ({ actions }) => {
           children: [],
 
           vin,
-          make,
-          model,
+          make: make.name,
+          model: model.name,
           trim,
           description,
           color,
