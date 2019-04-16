@@ -215,7 +215,7 @@ class Cars extends React.Component<IProps> {
         <InstantSearch
           appId="UQS7NGYH01"
           apiKey="417b0c1b13d3941a26d83069eec84360"
-          indexName={process.env.SITE_NAME}
+          indexName={`${process.env.DEALERSHIP_ID}-cars`}
           searchState={this.state.searchState}
           onSearchStateChange={event => this.onSearchStateChangedHandler(event)}
           createURL={event => this.createURL(event)}
