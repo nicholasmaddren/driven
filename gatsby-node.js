@@ -17,7 +17,6 @@ exports.sourceNodes = async ({ actions }) => {
       },
     })
     .then(res => {
-      console.log(res.data);
       res.data.map(car => {
         const {
           vin,
