@@ -35,7 +35,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-env-variables`,
       options: {
-        whitelist: ['DEALERSHIP_ID'],
+        whitelist: ['DEALERSHIP_ID', 'API_URL'],
       },
     },
   ],

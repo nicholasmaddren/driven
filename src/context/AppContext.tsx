@@ -2,6 +2,7 @@ import React from 'react';
 
 const defaultState = {
   selectedCar: {
+    id: null,
     make: null,
     model: null,
     price: null,
@@ -16,14 +17,7 @@ const AppContext = React.createContext(defaultState);
 
 class AppProvider extends React.Component {
   state = {
-    selectedCar: {
-      make: null,
-      model: null,
-      price: null,
-      images: null,
-      year: null,
-      mileage: null,
-    },
+    selectedCar: defaultState.selectedCar,
   };
 
   changeSelectedCar = selectedCar => {

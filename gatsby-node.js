@@ -19,6 +19,7 @@ exports.sourceNodes = async ({ actions }) => {
     .then(res => {
       res.data.map(car => {
         const {
+          _id,
           vin,
           make,
           model,
@@ -47,7 +48,7 @@ exports.sourceNodes = async ({ actions }) => {
         // Create your node object
         const carNode = {
           // Required fields
-          id: 'car-' + vin.toString(),
+          id: _id,
           parent: `__SOURCE__`,
           internal: {
             type: `Cars`, // name of the graphQL query --> allCars {}
@@ -113,6 +114,7 @@ exports.sourceNodes = async ({ actions }) => {
           },
           children: [],
 
+          carId: '12345',
           vin: '12345',
           make: 'BMW',
           model: '3 Series',

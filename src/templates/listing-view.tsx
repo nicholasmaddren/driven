@@ -203,6 +203,7 @@ export default ({ data }) => {
 export const query = graphql`
   query($slug: String!) {
     cars(slug: { eq: $slug }) {
+      id
       vin
       make
       model
