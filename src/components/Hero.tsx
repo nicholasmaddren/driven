@@ -40,7 +40,7 @@ const StyledContainer = styled.div<ICommonProps>`
 `;
 
 const StyledContent = styled.div<ICommonProps>`
-  width: 60%;
+  width: 100%;
   .meta {
     color: ${({ textColor }) => textColor};
     font-weight: 600;
@@ -48,11 +48,34 @@ const StyledContent = styled.div<ICommonProps>`
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
     margin-bottom: 40px;
     h1 {
-      font-size: 55px;
+      font-size: 30px;
     }
     p {
-      font-size: 20px;
+      font-size: 18px;
       margin: 0;
+    }
+  }
+  .children {
+    > * {
+      max-width: 350px;
+    }
+  }
+  @media screen and (min-width: 600px) {
+    .meta {
+      h1 {
+        font-size: 45px;
+      }
+      p {
+        font-size: 20px;
+      }
+    }
+  }
+  @media screen and (min-width: 900px) {
+    width: 60%;
+    .meta {
+      h1 {
+        font-size: 55px;
+      }
     }
   }
 `;
@@ -94,7 +117,7 @@ const Hero: React.SFC<IHeroProps> = props => (
           {props.heading && <h1>{props.heading}</h1>}
           {props.description && <p>{props.description}</p>}
         </div>
-        {props.children}
+        <div className="children">{props.children}</div>
       </StyledContent>
     </StyledContainer>
   </StyledHero>

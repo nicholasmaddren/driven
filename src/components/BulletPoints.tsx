@@ -1,19 +1,20 @@
 import styled from 'styled-components';
 import * as React from 'react';
 
-const StyledBulletPoints = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
+import Grid from '../components/Grid';
 
 const StyledtItem = styled.div`
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   img {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     margin-right: 20px;
+    @media screen and (min-width: 700px) {
+      width: 100px;
+      height: 100px;
+    }
   }
 `;
 
@@ -27,7 +28,7 @@ interface IProps {
 }
 
 const BulletPoints: React.SFC<IProps> = props => (
-  <StyledBulletPoints>
+  <Grid columnMinWidth={{ value: 300, unit: 'px' }}>
     {props.items.map(item => {
       return (
         <StyledtItem key={'bullet-point-' + item.id}>
@@ -39,7 +40,7 @@ const BulletPoints: React.SFC<IProps> = props => (
         </StyledtItem>
       );
     })}
-  </StyledBulletPoints>
+  </Grid>
 );
 
 export default BulletPoints;

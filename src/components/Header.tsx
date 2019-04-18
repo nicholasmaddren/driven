@@ -1,6 +1,8 @@
 import { Link } from 'gatsby';
 import styled from 'styled-components';
 import * as React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 const StyledHeader = styled.div`
   position: sticky;
@@ -39,9 +41,22 @@ const StyledMenu = styled.div`
   }
 `;
 
+const StyledMobileMenuButton = styled.button`
+  background-color: transparent;
+  border: 0;
+`;
+
+interface IMenuItems {
+  to: string;
+  name: string;
+}
+
 interface IHeaderProps {
+  menuItems: IMenuItems[];
   siteTitle: string;
   logoImage: string;
+  mobileMode: boolean;
+  onMobileMenuClick: () => void;
 }
 
 const defaultProps = {
@@ -59,12 +74,19 @@ const Header: React.SFC<IHeaderProps> = props => (
         )}
       </Link>
     </StyledBrand>
-    <StyledMenu>
-      <Link to="/cars">Cars for sale</Link>
-      <Link to="/">Sell your car</Link>
-      <Link to="/">About us</Link>
-      <Link to="/contact">Contact Us</Link>
-    </StyledMenu>
+    {props.mobileMode ? (
+      <StyledMobileMenuButton onClick={props.onMobileMenuClick}>
+        <FontAwesomeIcon icon={faBars} />
+      </StyledMobileMenuButton>
+    ) : (
+      <StyledMenu>
+        {props.menuItems.map(menuItem => (
+          <Link key={`header-link-${menuItem.name}`} to={menuItem.to}>
+            {menuItem.name}
+          </Link>
+        ))}
+      </StyledMenu>
+    )}
   </StyledHeader>
 );
 

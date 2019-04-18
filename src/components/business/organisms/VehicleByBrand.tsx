@@ -10,8 +10,14 @@ import MercedesBenz from '../../../images/brands/mercedes-benz.png';
 
 const StyledBrandContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
+  @media screen and (min-width: 500px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media screen and (min-width: 800px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
 `;
 
 const StyledBrandItem = styled.button`

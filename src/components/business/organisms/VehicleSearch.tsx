@@ -4,21 +4,23 @@ import { navigate } from '@reach/router';
 
 const StyledFacetedNav = styled.div`
   border-radius: 5px;
-  display: flex;
   margin-bottom: 20px;
-  input {
-    height: 50px;
-    padding: 0 10px;
-    min-width: 360px;
-    border: 0;
-  }
-  button {
-    background: ${props => props.theme.vars.color.primary};
-    border: 0;
-    color: #fff;
-    height: 50px;
-    padding: 0 20px;
-    cursor: pointer;
+  form {
+    display: flex;
+    input {
+      height: 50px;
+      width: 100%;
+      padding: 0 10px;
+      border: 0;
+    }
+    button {
+      background: ${props => props.theme.vars.color.primary};
+      border: 0;
+      color: #fff;
+      height: 50px;
+      padding: 0 20px;
+      cursor: pointer;
+    }
   }
 `;
 

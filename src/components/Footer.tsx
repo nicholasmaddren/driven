@@ -27,10 +27,20 @@ const StyledFooter = styled.footer<ICommonProps>`
 
 const StyledContainer = styled.div`
   max-width: 1200px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
   padding: 50px;
   margin: 0 auto;
+  > div {
+    width: 100%;
+    @media screen and (min-width: 700px) {
+      width: 50%;
+      :first-child {
+        order: 1;
+      }
+    }
+  }
 `;
 
 const StyledFooterBrand = styled.div`
@@ -103,6 +113,20 @@ const Footer: FC<IFooterProps> = props => (
   <StyledFooter bgColor={props.bgColor} textColor={props.textColor}>
     <StyledContainer>
       <div>
+        <StyledContactInfo>
+          <FontAwesomeIcon icon={faPhone} flip="horizontal" />
+          <a>01642 890900</a>
+        </StyledContactInfo>
+        <hr />
+        <StyledPageLinks>
+          {props.pageLinks.map(pageLink => (
+            <li key={pageLink.name}>
+              <Link to={pageLink.to}>{pageLink.name}</Link>
+            </li>
+          ))}
+        </StyledPageLinks>
+      </div>
+      <div>
         <StyledFooterBrand>
           <img className="logo" src={props.logoImage} alt={props.siteTitle} />
           <small>{props.copyright}</small>
@@ -130,20 +154,6 @@ const Footer: FC<IFooterProps> = props => (
             </a>
           </li>
         </StyledSocialLinks>
-      </div>
-      <div>
-        <StyledContactInfo>
-          <FontAwesomeIcon icon={faPhone} flip="horizontal" />
-          <a>01642 890900</a>
-        </StyledContactInfo>
-        <hr />
-        <StyledPageLinks>
-          {props.pageLinks.map(pageLink => (
-            <li key={pageLink.name}>
-              <Link to={pageLink.to}>{pageLink.name}</Link>
-            </li>
-          ))}
-        </StyledPageLinks>
       </div>
     </StyledContainer>
   </StyledFooter>
