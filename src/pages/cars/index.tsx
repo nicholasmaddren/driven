@@ -209,7 +209,6 @@ class Cars extends React.Component<IProps> {
   }
 
   render() {
-    console.log(`${process.env.DEALERSHIP_ID}-cars`);
     return (
       <Layout>
         <SEO title="Search cars" />
