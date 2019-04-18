@@ -27,11 +27,9 @@ const VehicleCarousel: React.SFC<IProps> = props => {
   const slidesToShow = (width: number) => {
     if (width > 1150) {
       return 4;
-    }
-    if (width > 950) {
+    } else if (width > 950) {
       return 3;
-    }
-    if (width > 650) {
+    } else if (width > 650) {
       return 2;
     } else {
       return 1;
