@@ -7,16 +7,18 @@ import {
   ClearRefinements,
   Stats,
   CurrentRefinements,
+  MenuSelect,
+  RefinementList,
 } from 'react-instantsearch-dom';
 import { Link } from 'gatsby';
 import qs from 'qs';
 import { navigate } from '@reach/router';
 import _ from 'lodash';
+import { darken } from 'polished';
 
 import Layout from '../../components/Layout';
 import SEO from '../../components/Seo';
 import VehicleItem from '../../components/business/organisms/VehicleItem';
-import RefinementList from '../../components/business/instant-search/widgets/RefinementList';
 
 const StyledContainer = styled.div`
   display: grid;
@@ -30,6 +32,12 @@ const StyledContainer = styled.div`
 const StyledFacetedNav = styled.div`
   padding: 20px;
   border-right: 1px solid ${props => props.theme.vars.color.grey2};
+  .facet-label {
+    display: block;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
 `;
 
 const StyledHits = styled.div`
@@ -46,6 +54,19 @@ const StyledHits = styled.div`
     .ais-InfiniteHits-loadMore {
       margin: 0 auto;
       display: block;
+      background-color: ${({ theme }) => theme.vars.color.primary};
+      border: 0;
+      border-bottom: 1px solid
+        ${({ theme }) => darken(0.2, theme.vars.color.primary)};
+      box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2);
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      &.ais-InfiniteHits-loadMore--disabled {
+        opacity: 0.75;
+      }
     }
   }
 `;
@@ -78,6 +99,7 @@ const StyledHitsHeader = styled.div`
 const StyledHitsHeaderRefinement = styled.div`
   margin-bottom: 20px;
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   .ais-ClearRefinements {
     button {
@@ -97,21 +119,28 @@ const StyledHitsHeaderRefinement = styled.div`
     margin: 0;
     display: flex;
     .ais-CurrentRefinements-item {
-      color: ${props => props.theme.vars.color.blue};
+      padding: 10px;
+      margin-right: 10px;
+      background-color: #fff;
+      text-transform: capitalize;
+      border-radius: ${props => props.theme.vars.border.radius.default};
       .ais-CurrentRefinements-label {
-        display: none;
+        margin-right: 5px;
       }
       .ais-CurrentRefinements-category {
-        margin-right: 20px;
+        margin-right: 10px;
         .ais-CurrentRefinements-categoryLabel {
           margin-right: 5px;
         }
         .ais-CurrentRefinements-delete {
           cursor: pointer;
-          background: transparent;
-          border: 0;
-          color: ${props => props.theme.vars.color.grey3};
+          background-color: ${props => props.theme.vars.color.grey1};
+          height: 20px;
+          width: 20px;
           padding: 0;
+          border: 0;
+          border-radius: 100%;
+          color: ${props => props.theme.vars.color.grey3};
           font-size: 12px;
         }
       }
@@ -122,16 +151,6 @@ const StyledHitsHeaderRefinement = styled.div`
 const StyledRefinementList = styled.div<IStyledRefinementList>`
   display: ${props => (props.isInactive ? 'none' : 'block')};
   padding: 20px 0;
-  border-bottom: 1px solid ${props => props.theme.vars.color.grey1};
-  &:last-child {
-    border-bottom: 0;
-  }
-  > label {
-    display: block;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 15px;
-  }
   .ais-RefinementList-list {
     margin: 0;
     .ais-RefinementList-item {
@@ -158,14 +177,11 @@ const StyledRefinementList = styled.div<IStyledRefinementList>`
       }
     }
   }
-  .ais-RefinementList-make-label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 600;
-    color: ${props => props.theme.vars.color.grey4};
-  }
-  .ais-RefinementList-list--model {
-    margin: 0 0 10px 10px;
+`;
+
+const StyledMenuSelect = styled(MenuSelect)`
+  select {
+    width: 100%;
   }
 `;
 
@@ -179,7 +195,6 @@ interface IProps {
 
 interface IState {
   searchState: string;
-  make: boolean;
 }
 
 class Cars extends React.Component<IProps> {
@@ -188,7 +203,6 @@ class Cars extends React.Component<IProps> {
 
   public state: IState = {
     searchState: this.urlToSearchState(this.props.location),
-    make: false,
   };
 
   private createURL = (state: { page: number; refinementList: {} }) =>
@@ -222,13 +236,15 @@ class Cars extends React.Component<IProps> {
         >
           <StyledContainer>
             <StyledFacetedNav>
+              <label className="facet-label">Make</label>
+              <StyledMenuSelect attribute="make" />
               <StyledRefinementList>
-                <label>Make</label>
-                <RefinementList attribute="make" />
-              </StyledRefinementList>
-              <StyledRefinementList isInactive={!this.state.make}>
-                <label>Model</label>
+                <label className="facet-label">Model</label>
                 <RefinementList attribute="model" />
+              </StyledRefinementList>
+              <StyledRefinementList>
+                <label className="facet-label">Body Type</label>
+                <RefinementList attribute="bodyType" />
               </StyledRefinementList>
             </StyledFacetedNav>
             <StyledHits>
@@ -266,7 +282,7 @@ class Cars extends React.Component<IProps> {
 
 function Vehicle({ hit }) {
   return (
-    <Link to={hit.slug}>
+    <Link to={`/${hit.slug}`}>
       <VehicleItem featuredImage={hit.images[0]} {...hit} />
     </Link>
   );

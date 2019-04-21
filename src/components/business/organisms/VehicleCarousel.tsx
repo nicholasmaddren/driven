@@ -53,7 +53,7 @@ const VehicleCarousel: React.SFC<IProps> = props => {
           >
             {props.vehicleItems.map(item => {
               return (
-                <Link to={item.node.slug} key={item.node.id}>
+                <Link to={`/${item.node.slug}`} key={item.node.id}>
                   <VehicleItem
                     m="20px"
                     featuredImage={item.node.images[0]}
