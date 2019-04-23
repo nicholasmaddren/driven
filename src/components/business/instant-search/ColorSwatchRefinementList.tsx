@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { connectRefinementList } from 'react-instantsearch-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
