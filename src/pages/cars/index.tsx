@@ -19,6 +19,7 @@ import { darken } from 'polished';
 import Layout from '../../components/Layout';
 import SEO from '../../components/Seo';
 import VehicleItem from '../../components/business/organisms/VehicleItem';
+import ColorSwatchRefinementList from '../../components/business/instant-search/ColorSwatchRefinementList';
 
 const StyledContainer = styled.div`
   display: grid;
@@ -246,6 +247,8 @@ class Cars extends React.Component<IProps> {
                 <label className="facet-label">Body Type</label>
                 <RefinementList attribute="bodyType" />
               </StyledRefinementList>
+              <label className="facet-label">Color</label>
+              <ColorSwatchRefinementList attribute="color" />
             </StyledFacetedNav>
             <StyledHits>
               <StyledHitsHeader>
