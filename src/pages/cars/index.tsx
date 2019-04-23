@@ -20,6 +20,7 @@ import Layout from '../../components/Layout';
 import SEO from '../../components/Seo';
 import VehicleItem from '../../components/business/organisms/VehicleItem';
 import ColorSwatchRefinementList from '../../components/business/instant-search/ColorSwatchRefinementList';
+import PriceRangeSlider from '../../components/business/instant-search/PriceRangeSlider';
 
 const StyledContainer = styled.div`
   display: grid;
@@ -129,7 +130,7 @@ const StyledHitsHeaderRefinement = styled.div`
         margin-right: 5px;
       }
       .ais-CurrentRefinements-category {
-        margin-right: 10px;
+        margin-right: 5px;
         .ais-CurrentRefinements-categoryLabel {
           margin-right: 5px;
         }
@@ -243,6 +244,8 @@ class Cars extends React.Component<IProps> {
                 <label className="facet-label">Model</label>
                 <RefinementList attribute="model" />
               </StyledRefinementList>
+              <label className="facet-label">Price</label>
+              <PriceRangeSlider attribute="price" />
               <StyledRefinementList>
                 <label className="facet-label">Body Type</label>
                 <RefinementList attribute="bodyType" />
