@@ -3,10 +3,8 @@ import Rheostat from '../../Rheostat';
 import { connectRange } from 'react-instantsearch-dom';
 import styled from 'styled-components';
 
-import PriceDisplay from '../atoms/PriceDisplay';
-
-const StyledPriceRange = styled.div`
-  .price-range__text-values {
+const StyledMileageRange = styled.div`
+  .mileage-range__text-values {
     margin-bottom: 10px;
   }
 `;
@@ -61,11 +59,11 @@ class PriceRange extends Component<IPriceRangeProps> {
     const { currentValues } = this.state;
 
     return min !== max ? (
-      <StyledPriceRange>
-        <div className="price-range__text-values">
-          <PriceDisplay value={currentValues.min} />
+      <StyledMileageRange>
+        <div className="mileage-range__text-values">
+          {currentValues.min}
           {' - '}
-          <PriceDisplay value={currentValues.max} />
+          {currentValues.max}
         </div>
         <Rheostat
           className="ais-RangeSlider"
@@ -75,7 +73,7 @@ class PriceRange extends Component<IPriceRangeProps> {
           onChange={this.onChange}
           onValuesUpdated={this.onValuesUpdated}
         />
-      </StyledPriceRange>
+      </StyledMileageRange>
     ) : null;
   }
 }

@@ -18,7 +18,7 @@ const StyledMenu = styled.div<ICommonProps>`
   text-align: center;
   box-sizing: border-box;
   button {
-    padding: 20px;
+    padding: 10px 15px;
     background-color: ${({ theme }) => theme.vars.color.red};
     border-radius: 0 0 ${({ theme }) => theme.vars.border.radius.default} 0;
     position: absolute;

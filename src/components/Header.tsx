@@ -6,7 +6,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 const StyledHeader = styled.div`
   position: sticky;
-  z-index: 1;
+  z-index: 2;
   top: 0;
   padding: 20px;
   background: #fff;

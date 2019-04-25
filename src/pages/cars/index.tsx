@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import {
   InstantSearch,
   InfiniteHits,
@@ -15,30 +15,83 @@ import qs from 'qs';
 import { navigate } from '@reach/router';
 import _ from 'lodash';
 import { darken } from 'polished';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faFilter } from '@fortawesome/free-solid-svg-icons';
 
 import Layout from '../../components/Layout';
 import SEO from '../../components/Seo';
 import VehicleItem from '../../components/business/organisms/VehicleItem';
 import ColorSwatchRefinementList from '../../components/business/instant-search/ColorSwatchRefinementList';
 import PriceRangeSlider from '../../components/business/instant-search/PriceRangeSlider';
+import MileageRangeSlider from '../../components/business/instant-search/MileageRangeSlider';
+
+const StyledBodyScrollLock = createGlobalStyle<IStyledBodyScrollLock>`
+  ${({ scrollLock }) =>
+    scrollLock &&
+    `
+    body {
+      overflow: hidden;
+    }
+  `}
+`;
 
 const StyledContainer = styled.div`
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 1fr;
+  @media screen and (min-width: 600px) {
+    grid-template-columns: 250px 1fr;
+    .overlay {
+      display: none;
+    }
+  }
   ul {
     list-style-type: none;
     padding: 0;
   }
+  .overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+  }
 `;
 
-const StyledFacetedNav = styled.div`
+const StyledFacetedNav = styled.div<ICommonState>`
+  position: relative;
   padding: 20px;
   border-right: 1px solid ${props => props.theme.vars.color.grey2};
-  .facet-label {
-    display: block;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 15px;
+  @media screen and (max-width: 600px) {
+    position: absolute;
+    width: 250px;
+    height: calc(100vh - 110px);
+    background-color: #fff;
+    overflow-y: scroll;
+    transform: translate3d(
+      ${({ showFacetedNav }) => (showFacetedNav ? '0' : '-100vw')},
+      0,
+      0
+    );
+    transition: all 0.25s ease-in-out;
+  }
+  .facet-item {
+    padding: 20px 0;
+    > label {
+      display: block;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+  }
+  .close-btn {
+    position: absolute;
+    padding: 10px 15px;
+    right: 0;
+    top: 0;
+    @media screen and (min-width: 600px) {
+      display: none;
+    }
   }
 `;
 
@@ -50,8 +103,17 @@ const StyledHits = styled.div`
       list-style-type: none;
       display: grid;
       grid-gap: 20px;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr;
       padding: 0;
+      @media screen and (min-width: 800px) {
+        grid-template-columns: 1fr 1fr;
+      }
+      @media screen and (min-width: 1050px) {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      @media screen and (min-width: 1300px) {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+      }
     }
     .ais-InfiniteHits-loadMore {
       margin: 0 auto;
@@ -74,11 +136,27 @@ const StyledHits = styled.div`
 `;
 
 const StyledHitsHeader = styled.div`
+  .search-container {
+    display: flex;
+    margin-bottom: 20px;
+    .faceted-nav-btn {
+      display: flex;
+      background-color: transparent;
+      border: 0;
+      margin-right: 20px;
+      padding: 0;
+      @media screen and (min-width: 600px) {
+        display: none;
+      }
+      svg {
+        margin-right: 5px;
+      }
+    }
+  }
   .ais-SearchBox {
     border: 1px solid ${props => props.theme.vars.color.grey2};
     border-radius: 20px;
     background: #fff;
-    margin-bottom: 20px;
     width: 100%;
     form {
       display: flex;
@@ -103,6 +181,11 @@ const StyledHitsHeaderRefinement = styled.div`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  .ais-CurrentRefinements-item,
+  .ais-ClearRefinements,
+  .ais-Stats {
+    margin-bottom: 10px;
+  }
   .ais-ClearRefinements {
     button {
       background: transparent;
@@ -119,8 +202,8 @@ const StyledHitsHeaderRefinement = styled.div`
   }
   .ais-CurrentRefinements-list {
     margin: 0;
-    display: flex;
     .ais-CurrentRefinements-item {
+      display: inline-block;
       padding: 10px;
       margin-right: 10px;
       background-color: #fff;
@@ -130,7 +213,9 @@ const StyledHitsHeaderRefinement = styled.div`
         margin-right: 5px;
       }
       .ais-CurrentRefinements-category {
-        margin-right: 5px;
+        display: inline-block;
+        margin-right: 10px;
+        padding: 5px 0;
         .ais-CurrentRefinements-categoryLabel {
           margin-right: 5px;
         }
@@ -152,7 +237,6 @@ const StyledHitsHeaderRefinement = styled.div`
 
 const StyledRefinementList = styled.div<IStyledRefinementList>`
   display: ${props => (props.isInactive ? 'none' : 'block')};
-  padding: 20px 0;
   .ais-RefinementList-list {
     margin: 0;
     .ais-RefinementList-item {
@@ -187,6 +271,10 @@ const StyledMenuSelect = styled(MenuSelect)`
   }
 `;
 
+interface IStyledBodyScrollLock {
+  scrollLock: boolean;
+}
+
 interface IStyledRefinementList {
   isInactive?: boolean;
 }
@@ -195,7 +283,11 @@ interface IProps {
   location: string;
 }
 
-interface IState {
+interface ICommonState {
+  showFacetedNav: boolean;
+}
+
+interface IState extends ICommonState {
   searchState: string;
 }
 
@@ -205,6 +297,7 @@ class Cars extends React.Component<IProps> {
 
   public state: IState = {
     searchState: this.urlToSearchState(this.props.location),
+    showFacetedNav: false,
   };
 
   private createURL = (state: { page: number; refinementList: {} }) =>
@@ -218,6 +311,10 @@ class Cars extends React.Component<IProps> {
       ? `${props.location.pathname}${this.createURL(searchState)}`
       : '';
 
+  private handleFacetedNavBtn = () => {
+    this.setState({ showFacetedNav: !this.state.showFacetedNav });
+  };
+
   componentWillReceiveProps(props) {
     if (props.location !== this.props.location) {
       this.setState({ searchState: this.urlToSearchState(props.location) });
@@ -227,6 +324,7 @@ class Cars extends React.Component<IProps> {
   render() {
     return (
       <Layout>
+        <StyledBodyScrollLock scrollLock={this.state.showFacetedNav} />
         <SEO title="Search cars" />
         <InstantSearch
           appId="UQS7NGYH01"
@@ -237,29 +335,57 @@ class Cars extends React.Component<IProps> {
           createURL={event => this.createURL(event)}
         >
           <StyledContainer>
-            <StyledFacetedNav>
-              <label className="facet-label">Make</label>
-              <StyledMenuSelect attribute="make" />
-              <StyledRefinementList>
-                <label className="facet-label">Model</label>
-                <RefinementList attribute="model" />
-              </StyledRefinementList>
-              <label className="facet-label">Price</label>
-              <PriceRangeSlider attribute="price" />
-              <StyledRefinementList>
+            {this.state.showFacetedNav && (
+              <div className="overlay" onClick={this.handleFacetedNavBtn} />
+            )}
+            <StyledFacetedNav showFacetedNav={this.state.showFacetedNav}>
+              <button className="close-btn" onClick={this.handleFacetedNavBtn}>
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+              <div className="facet-item">
+                <label>Make</label>
+                <StyledMenuSelect attribute="make" />
+              </div>
+              <div className="facet-item">
+                <label>Model</label>
+                <StyledRefinementList>
+                  <RefinementList attribute="model" />
+                </StyledRefinementList>
+              </div>
+              <div className="facet-item">
+                <label className="facet-label">Price</label>
+                <PriceRangeSlider attribute="price" />
+              </div>
+              <div className="facet-item">
+                <label className="facet-label">Mileage</label>
+                <MileageRangeSlider attribute="mileage" />
+              </div>
+              <div className="facet-item">
+                <label className="facet-label">Color</label>
+                <ColorSwatchRefinementList attribute="color" />
+              </div>
+              <div className="facet-item">
                 <label className="facet-label">Body Type</label>
-                <RefinementList attribute="bodyType" />
-              </StyledRefinementList>
-              <label className="facet-label">Color</label>
-              <ColorSwatchRefinementList attribute="color" />
+                <StyledRefinementList>
+                  <RefinementList attribute="bodyType" />
+                </StyledRefinementList>
+              </div>
             </StyledFacetedNav>
             <StyledHits>
               <StyledHitsHeader>
-                <SearchBox
-                  translations={{
-                    placeholder: 'Search by make, model or keyword',
-                  }}
-                />
+                <div className="search-container">
+                  <button
+                    className="faceted-nav-btn"
+                    onClick={this.handleFacetedNavBtn}
+                  >
+                    <FontAwesomeIcon icon={faFilter} /> Filters
+                  </button>
+                  <SearchBox
+                    translations={{
+                      placeholder: 'Search by make, model or keyword',
+                    }}
+                  />
+                </div>
                 <StyledHitsHeaderRefinement>
                   <ClearRefinements />
                   <CurrentRefinements />

@@ -13,7 +13,7 @@ exports.sourceNodes = async ({ actions }) => {
   await axios
     .get(`${process.env.API_URL}/cars/external/${process.env.DEALERSHIP_ID}`, {
       headers: {
-        Authorization: `Bearer ${process.env.TOKEN}`,
+        Authorization: `Bearer fmEB*cuY.]zwA!tby^PR_G<}{*EtI?°&h|hmdPm%ityuA<1|B(7T§TBEjwrXrDy6`,
       },
     })
     .then(res => {
@@ -172,7 +172,7 @@ exports.sourceNodes = async ({ actions }) => {
       }`,
       {
         headers: {
-          Authorization: `Bearer ${process.env.TOKEN}`,
+          Authorization: `Bearer fmEB*cuY.]zwA!tby^PR_G<}{*EtI?°&h|hmdPm%ityuA<1|B(7T§TBEjwrXrDy6`,
         },
       }
     )
