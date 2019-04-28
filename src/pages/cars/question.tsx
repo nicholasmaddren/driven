@@ -44,6 +44,7 @@ const Question = () => {
         lastname: lastName,
         phoneNumber: phone,
         email,
+        message,
       })
       .then(() => {
         setSubmitSuccess(true);
